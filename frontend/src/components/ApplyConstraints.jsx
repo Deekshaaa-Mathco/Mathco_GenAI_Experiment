@@ -15,7 +15,7 @@ function ApplyConstraints() {
   const handleSaveContinue = async () => {
     try {
       // Save constraints to backend
-      await fetch('http://localhost:3001/api/constraints/update', {
+      await fetch('api/constraints/update', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ function ApplyConstraints() {
           <Typography variant="h6">Warehouse Capacity Constraints</Typography>
           <Table sx={{ mt: 1, '&:hover': { backgroundColor: '#f5f5f5' }, border: '1px solid #ddd', borderRadius: '10px' }}>
             <TableHead>
-              <TableRow sx={{ backgroundColor: '#C8102E', color: 'white' }}>
+              <TableRow sx={{ backgroundColor: 'black', color: 'white' }}>
                 <TableCell sx={{ color: 'white' }}>DC</TableCell>
                 <TableCell sx={{ color: 'white' }}>Max Capacity</TableCell>
                 <TableCell sx={{ color: 'white' }}>Available</TableCell>
@@ -80,7 +80,7 @@ function ApplyConstraints() {
           <Typography variant="h6" sx={{ mt: 3 }}>Production Capacity Constraints</Typography>
           <Table sx={{ mt: 1, '&:hover': { backgroundColor: '#f5f5f5' }, border: '1px solid #ddd', borderRadius: '10px' }}>
             <TableHead>
-              <TableRow sx={{ backgroundColor: '#C8102E', color: 'white' }}>
+              <TableRow sx={{ backgroundColor: 'black', color: 'white' }}>
                 <TableCell sx={{ color: 'white' }}>Plant - Line</TableCell>
                 <TableCell sx={{ color: 'white' }}>Max Capacity</TableCell>
                 <TableCell sx={{ color: 'white' }}>Planned</TableCell>

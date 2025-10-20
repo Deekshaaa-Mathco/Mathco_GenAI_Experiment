@@ -16,7 +16,7 @@ function CommercialInputs() {
 
   useEffect(() => {
     if (skuFromQuery) {
-      fetch(`http://localhost:3001/api/commercial/adjustments/${skuFromQuery}`)
+      fetch(`/api/commercial/adjustments/${skuFromQuery}`)
         .then(res => res.json())
         .then(data => setAdjustments(data))
         .catch(err => console.error('Error fetching adjustments:', err));
@@ -43,7 +43,7 @@ function CommercialInputs() {
   const handleSaveContinue = async () => {
     try {
       // Save adjustments to backend
-      await fetch('http://localhost:3001/api/commercial/adjustments', {
+      await fetch('/api/commercial/adjustments', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ function CommercialInputs() {
           <Typography sx={{ mt: 2 }}>Recent Adjustments</Typography>
           <Table sx={{ mt: 1, backgroundColor: 'transparent', '&:hover': { backgroundColor: '#f5f5f5' }, border: '1px solid #ddd', borderRadius: '10px' }}>
             <TableHead>
-              <TableRow sx={{ backgroundColor: '#C8102E', color: 'white' }}>
+              <TableRow sx={{ backgroundColor: 'black', color: 'white' }}>
                 <TableCell sx={{ color: 'white' }}>SKU</TableCell>
                 <TableCell sx={{ color: 'white' }}>DC</TableCell>
                 <TableCell sx={{ color: 'white' }}>Volume</TableCell>

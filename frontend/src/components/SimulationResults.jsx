@@ -15,7 +15,7 @@ function SimulationResults() {
         <Typography>Impact KPIs: OOS Risk Reduction -45%, Capacity Impact 89%, Service Level 97.2%</Typography>
         <Table sx={{ mt: 1, '&:hover': { backgroundColor: '#f5f5f5' }, border: '1px solid #ddd', borderRadius: '10px' }}>
           <TableHead>
-            <TableRow sx={{ backgroundColor: '#C8102E', color: 'white' }}>
+            <TableRow sx={{ backgroundColor: 'black', color: 'white' }}>
               <TableCell sx={{ color: 'white' }}>Simulation Changes</TableCell>
             </TableRow>
           </TableHead>

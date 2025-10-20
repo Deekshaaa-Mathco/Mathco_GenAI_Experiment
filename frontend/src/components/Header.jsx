@@ -1,5 +1,6 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography, Box, Button } from '@mui/material';
+import PersonIcon from '@mui/icons-material/Person';
 import { useAuth } from '../context/AuthContext';
 
 function Header() {
@@ -16,7 +17,8 @@ function Header() {
         </Typography>
         {isAuthenticated && (
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Typography variant="body1" sx={{ mr: 2, color: 'var(--coca-cola-white)' }}>
+            <PersonIcon sx={{ mr: 1, color: 'var(--coca-cola-white)' }} />
+            <Typography variant="h6" sx={{ mr: 2, color: 'var(--coca-cola-white)' }}>
               Welcome, {user?.username}
             </Typography>
             <Button color="inherit" onClick={logout}>

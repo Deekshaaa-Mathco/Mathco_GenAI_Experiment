@@ -49,7 +49,7 @@ function SupplyPlanning() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const res = await axios.get('http://localhost:3001/api/supply/planning');
+        const res = await axios.get('/api/supply/planning');
         setData(res.data || {});
       } catch (err) {
         console.error('API Error:', err);
@@ -63,9 +63,9 @@ function SupplyPlanning() {
 
   const applyScenario = async (scenarioName) => {
     try {
-      await axios.post('http://localhost:3001/api/supply/apply-scenario', { scenario: scenarioName });
+      await axios.post('/api/supply/apply-scenario', { scenario: scenarioName });
       // Refresh data after applying scenario
-      const res = await axios.get('http://localhost:3001/api/supply/planning');
+      const res = await axios.get('/api/supply/planning');
       setData(res.data || {});
       alert(`${scenarioName} applied successfully!`);
     } catch (error) {
@@ -116,10 +116,10 @@ function SupplyPlanning() {
       }
 
       try {
-        await axios.put(`http://localhost:3001/api/supply/utilization/${type}/${id}`, {
+        await axios.put(`/supply/utilization/${type}/${id}`, {
           value: newCapacity,
         });
-        const res = await axios.get('http://localhost:3001/api/supply/planning');
+        const res = await axios.get('/api/supply/planning');
         setData(res.data || {});
         setEditingCell(null);
         setEditedValue('');
@@ -150,12 +150,12 @@ function SupplyPlanning() {
             >
               <Table>
                 <TableHead>
-                  <TableRow sx={{ backgroundColor: '#000000' }}>
-                    <TableCell sx={{ color: '#FFFFFF' }}>DC Name</TableCell>
-                    <TableCell sx={{ color: '#FFFFFF' }}>Max Capacity</TableCell>
-                    <TableCell sx={{ color: '#FFFFFF' }}>Available Capacity</TableCell>
-                    <TableCell sx={{ color: '#FFFFFF' }}>Utilization %</TableCell>
-                    <TableCell sx={{ color: '#FFFFFF' }}>Actions</TableCell>
+                  <TableRow sx={{ backgroundColor: 'black' }}>
+                    <TableCell sx={{ color: 'white' }}>DC Name</TableCell>
+                    <TableCell sx={{ color: 'white' }}>Max Capacity</TableCell>
+                    <TableCell sx={{ color: 'white' }}>Available Capacity</TableCell>
+                    <TableCell sx={{ color: 'white' }}>Utilization %</TableCell>
+                    <TableCell sx={{ color: 'white' }}>Actions</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -237,13 +237,13 @@ function SupplyPlanning() {
             >
               <Table>
                 <TableHead>
-                  <TableRow sx={{ backgroundColor: '#000000' }}>
-                    <TableCell sx={{ color: '#FFFFFF' }}>Plant</TableCell>
-                    <TableCell sx={{ color: '#FFFFFF' }}>Line</TableCell>
-                    <TableCell sx={{ color: '#FFFFFF' }}>Weekly Capacity</TableCell>
-                    <TableCell sx={{ color: '#FFFFFF' }}>Changeover Time</TableCell>
-                    <TableCell sx={{ color: '#FFFFFF' }}>Utilization %</TableCell>
-                    <TableCell sx={{ color: '#FFFFFF' }}>Actions</TableCell>
+                  <TableRow sx={{ backgroundColor: 'black' }}>
+                    <TableCell sx={{ color: 'white' }}>Plant</TableCell>
+                    <TableCell sx={{ color: 'white' }}>Line</TableCell>
+                    <TableCell sx={{ color: 'white' }}>Weekly Capacity</TableCell>
+                    <TableCell sx={{ color: 'white' }}>Changeover Time</TableCell>
+                    <TableCell sx={{ color: 'white' }}>Utilization %</TableCell>
+                    <TableCell sx={{ color: 'white' }}>Actions</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -306,7 +306,7 @@ function SupplyPlanning() {
                         </Button>
                       )}
                   </TableCell>
-                    </TableRow>
+                  </TableRow>
                   ))}
                 </TableBody>
               </Table>
@@ -323,10 +323,10 @@ function SupplyPlanning() {
             <TableContainer component={Paper} sx={{ mt: 2 }}>
               <Table>
                 <TableHead>
-                  <TableRow sx={{ backgroundColor: '#000000' }}>
-                    <TableCell sx={{ color: '#FFFFFF' }}>Plant Name</TableCell>
-                    <TableCell sx={{ color: '#FFFFFF' }}>Number of Lines</TableCell>
-                    <TableCell sx={{ color: '#FFFFFF' }}>Total Weekly Capacity</TableCell>
+                  <TableRow sx={{ backgroundColor: 'black' }}>
+                    <TableCell sx={{ color: 'white' }}>Plant Name</TableCell>
+                    <TableCell sx={{ color: 'white' }}>Number of Lines</TableCell>
+                    <TableCell sx={{ color: 'white' }}>Total Weekly Capacity</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -352,10 +352,10 @@ function SupplyPlanning() {
             <TableContainer component={Paper} sx={{ mt: 2 }}>
               <Table>
                 <TableHead>
-                  <TableRow sx={{ backgroundColor: '#000000' }}>
-                    <TableCell sx={{ color: '#FFFFFF' }}>Plant Name</TableCell>
-                    <TableCell sx={{ color: '#FFFFFF' }}>Allocated Capacity</TableCell>
-                    <TableCell sx={{ color: '#FFFFFF' }}>Total Capacity</TableCell>
+                  <TableRow sx={{ backgroundColor: 'black' }}>
+                    <TableCell sx={{ color: 'white' }}>Plant Name</TableCell>
+                    <TableCell sx={{ color: 'white' }}>Allocated Capacity</TableCell>
+                    <TableCell sx={{ color: 'white' }}>Total Capacity</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -381,10 +381,10 @@ function SupplyPlanning() {
             <TableContainer component={Paper} sx={{ mt: 2 }}>
               <Table>
                 <TableHead>
-                  <TableRow sx={{ backgroundColor: '#000000' }}>
-                    <TableCell sx={{ color: '#FFFFFF' }}>Plant Name</TableCell>
-                    <TableCell sx={{ color: '#FFFFFF' }}>DC Name</TableCell>
-                    <TableCell sx={{ color: '#FFFFFF' }}>Allocated Volume</TableCell>
+                  <TableRow sx={{ backgroundColor: 'black' }}>
+                    <TableCell sx={{ color: 'white' }}>Plant Name</TableCell>
+                    <TableCell sx={{ color: 'white' }}>DC Name</TableCell>
+                    <TableCell sx={{ color: 'white' }}>Allocated Volume</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -488,20 +488,29 @@ function SupplyPlanning() {
                 <Typography variant="body2" sx={{ color: 'black', mt: 1, fontSize: '0.8rem' }}>
                   {scenario.impact}
                 </Typography>
-                <Button
-                  variant="contained"
-                  size="small"
-                  sx={{ mt: 2, backgroundColor: '#C8102E', color: 'white', '&:hover': { backgroundColor: '#a50f23' } }}
-                  onClick={() => applyScenario(scenario.name)}
-                >
-                  Apply Scenario
-                </Button>
+                <Box sx={{ display: 'flex', gap: 1, mt: 2 }}>
+                  <Button
+                    variant="contained"
+                    size="small"
+                    sx={{ backgroundColor: '#C8102E', color: 'white', '&:hover': { backgroundColor: '#a50f23' } }}
+                    onClick={() => applyScenario(scenario.name)}
+                  >
+                    Apply Scenario
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    sx={{ borderColor: '#C8102E', color: '#C8102E', '&:hover': { backgroundColor: '#C8102E', color: 'white' } }}
+                    onClick={() => window.location.href = '/publish-plan'}
+                  >
+                    Publish Plan
+                  </Button>
+                </Box>
               </CardContent>
             </Card>
           </Grid>
-        ))}
-      </Grid>
-
+        ))
+      }</Grid>
       {/* Forecast vs Actual Sales */}
       <Paper elevation={2} sx={{ p: 2, mb: 3 }}>
         <Typography variant="h6" gutterBottom sx={{ color: 'black' }}>
@@ -523,43 +532,6 @@ function SupplyPlanning() {
           </ResponsiveContainer>
         )}
       </Paper>
-
-      {/* Top-right Buttons */}
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          gap: 2,
-          mb: 2,
-          mt: 3,
-        }}
-      >
-        <Button
-          variant="outlined"
-          onClick={() => window.location.href = '/simulate-scenarios'}
-          sx={{
-            borderColor: '#C8102E',
-            color: '#C8102E',
-            textTransform: 'none',
-            fontWeight: 500,
-            '&:hover': { backgroundColor: '#C8102E', color: 'white' },
-          }}
-        >
-          Simulate Scenario
-        </Button>
-
-        <Button
-          variant="contained"
-          sx={{
-            backgroundColor: '#C8102E',
-            textTransform: 'none',
-            fontWeight: 500,
-            '&:hover': { backgroundColor: '#a50f23' },
-          }}
-        >
-          Publish Plan
-        </Button>
-      </Box>
 
       {/* Tabs Section */}
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

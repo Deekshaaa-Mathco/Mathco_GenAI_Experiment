@@ -58,7 +58,7 @@ function DemandReview() {
   useEffect(() => {
     const fetchAllForecastData = async () => {
       try {
-        const res = await axios.get('http://localhost:3001/api/demand/review');
+        const res = await axios.get('/api/demand/review');
         const forecastData = res.data.forecast.map(item => ({
           ...item,
           forecast_volume: parseFloat(item.forecast_volume),
@@ -75,13 +75,13 @@ function DemandReview() {
     const fetchFilterOptions = async () => {
       try {
         const [skusRes, dcsRes, segmentsRes, categoriesRes, brandsRes, packSizesRes, packTypesRes] = await Promise.all([
-          axios.get('http://localhost:3001/api/skus'),
-          axios.get('http://localhost:3001/api/dcs'),
-          axios.get('http://localhost:3001/api/demand/segments'),
-          axios.get('http://localhost:3001/api/demand/categories'),
-          axios.get('http://localhost:3001/api/demand/brands'),
-          axios.get('http://localhost:3001/api/demand/pack-sizes'),
-          axios.get('http://localhost:3001/api/demand/pack-types'),
+          axios.get('/api/skus'),
+          axios.get('/api/dcs'),
+          axios.get('/api/demand/segments'),
+          axios.get('/api/demand/categories'),
+          axios.get('/api/demand/brands'),
+          axios.get('/api/demand/pack-sizes'),
+          axios.get('/api/demand/pack-types'),
         ]);
         setFilterOptions({
           skus: skusRes.data,
@@ -108,7 +108,7 @@ function DemandReview() {
           startWeek: filters.startWeek || 45,
           endWeek: filters.endWeek || 52,
         };
-        const res = await axios.get('http://localhost:3001/api/demand/review', { params });
+        const res = await axios.get('/api/demand/review', { params });
         const forecastData = res.data.forecast.map(item => ({
           ...item,
           forecast_volume: parseFloat(item.forecast_volume),
@@ -167,7 +167,7 @@ function DemandReview() {
     }
 
     try {
-      await axios.put(`http://localhost:3001/api/demand/forecast/${forecastId}`, {
+      await axios.put(`/api/demand/forecast/${forecastId}`, {
         adjustment_volume,
         reason_code: reasonCode,
         userId: user.id,
@@ -204,7 +204,7 @@ function DemandReview() {
       <Grid container spacing={2} sx={{ mt: 2 }}>
         {Object.entries(segmentationData).map(([seg, { count, volume, service }]) => (
           <Grid item xs={3} key={seg}>
-            <Card sx={{ backgroundColor: '#FFE5E5', width: '300px', height: '150px' }}>
+            <Card sx={{ backgroundColor: 'white', width: '300px', height: '150px' }}>
               <CardContent>
                 <Typography variant="h6">Segment {seg}</Typography>
                 <Typography>{count} SKUs </Typography>

@@ -14,7 +14,7 @@ function ReasonCodes() {
   }, []);
 
   const fetchReasonCodes = async () => {
-    const response = await axios.get('http://localhost:3001/api/reason-codes');
+    const response = await axios.get('/api/reason-codes');
     setReasonCodes(response.data);
   };
 
@@ -39,10 +39,10 @@ function ReasonCodes() {
     try {
       if (editingReasonCode) {
         // Update existing reason code
-        await axios.put(`http://localhost:3001/api/reason-codes/${editingReasonCode.id}`, newReasonCode);
+        await axios.put(`/api/reason-codes/${editingReasonCode.id}`, newReasonCode);
       } else {
         // Create new reason code
-        await axios.post('http://localhost:3001/api/reason-codes', newReasonCode);
+        await axios.post('/api/reason-codes', newReasonCode);
       }
       fetchReasonCodes();
       handleClose();
@@ -53,7 +53,7 @@ function ReasonCodes() {
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:3001/api/reason-codes/${id}`);
+    await axios.delete(`/api/reason-codes/${id}`);
     fetchReasonCodes();
   };
 
@@ -65,10 +65,10 @@ function ReasonCodes() {
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
-            <TableRow sx={{ backgroundColor: 'var(--coca-cola-black)' }}>
-              <TableCell sx={{ color: 'var(--coca-cola-white)' }}>Reason Code</TableCell>
-              <TableCell sx={{ color: 'var(--coca-cola-white)' }}>Description</TableCell>
-              <TableCell sx={{ color: 'var(--coca-cola-white)' }}>Actions</TableCell>
+            <TableRow sx={{ backgroundColor: 'black' }}>
+              <TableCell sx={{ color: 'white' }}>Reason Code</TableCell>
+              <TableCell sx={{ color: 'white' }}>Description</TableCell>
+              <TableCell sx={{ color: 'white' }}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

@@ -25,7 +25,7 @@ function MasterConfigurator() {
 
   const fetchModelPerformance = async () => {
     try {
-      const res = await axios.get('http://localhost:3001/api/model/performance');
+      const res = await axios.get('/api/model/performance');
       const apiData = res.data;
       if (apiData.kpis && typeof apiData.kpis.accuracy !== 'number') {
         apiData.kpis.accuracy = 87.3;
@@ -38,7 +38,7 @@ function MasterConfigurator() {
 
   const fetchReasonCodes = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/reason-codes');
+      const response = await axios.get('/api/reason-codes');
       setReasonCodes(response.data);
     } catch (error) {
       console.error('Error fetching reason codes:', error);
@@ -69,9 +69,9 @@ function MasterConfigurator() {
   const handleSave = async () => {
     try {
       if (editingReasonCode) {
-        await axios.put(`http://localhost:3001/api/reason-codes/${editingReasonCode.id}`, newReasonCode);
+        await axios.put(`/api/reason-codes/${editingReasonCode.id}`, newReasonCode);
       } else {
-        await axios.post('http://localhost:3001/api/reason-codes', newReasonCode);
+        await axios.post('/api/reason-codes', newReasonCode);
       }
       fetchReasonCodes();
       handleClose();
@@ -83,7 +83,7 @@ function MasterConfigurator() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3001/api/reason-codes/${id}`);
+      await axios.delete(`/api/reason-codes/${id}`);
       fetchReasonCodes();
     } catch (error) {
       console.error('Error deleting reason code:', error);
@@ -148,15 +148,15 @@ function MasterConfigurator() {
               }} sx={{ mt: 2 }}>Add Adjustment</Button>
               <Typography sx={{ mt: 2 }}>Recent Adjustments</Typography>
               <Table sx={{ mt: 1, backgroundColor: 'transparent', '&:hover': { backgroundColor: '#f5f5f5' }, border: '1px solid #ddd', borderRadius: '10px' }}>
-                <TableHead>
-                  <TableRow sx={{ backgroundColor: '#C8102E', color: 'white' }}>
-                    <TableCell sx={{ color: 'white' }}>SKU</TableCell>
-                    <TableCell sx={{ color: 'white' }}>DC</TableCell>
-                    <TableCell sx={{ color: 'white' }}>Volume</TableCell>
-                    <TableCell sx={{ color: 'white' }}>Reason</TableCell>
-                    <TableCell sx={{ color: 'white' }}>Date</TableCell>
-                  </TableRow>
-                </TableHead>
+              <TableHead>
+                <TableRow sx={{ backgroundColor: 'black', color: 'white' }}>
+                  <TableCell sx={{ color: 'white' }}>SKU</TableCell>
+                  <TableCell sx={{ color: 'white' }}>DC</TableCell>
+                  <TableCell sx={{ color: 'white' }}>Volume</TableCell>
+                  <TableCell sx={{ color: 'white' }}>Reason</TableCell>
+                  <TableCell sx={{ color: 'white' }}>Date</TableCell>
+                </TableRow>
+              </TableHead>
                 <TableBody>
                   {adjustments.map((adj, idx) => (
                     <TableRow key={idx} sx={{ '&:hover': { backgroundColor: '#e0e0e0' } }}>
@@ -171,7 +171,7 @@ function MasterConfigurator() {
               </Table>
               <Button variant="contained" onClick={async () => {
                 try {
-                  await fetch('http://localhost:3001/api/commercial/adjustments', {
+                  await fetch('/api/commercial/adjustments', {
                     method: 'POST',
                     headers: {
                       'Content-Type': 'application/json',
@@ -195,10 +195,10 @@ function MasterConfigurator() {
           <TableContainer component={Paper}>
             <Table>
               <TableHead>
-                <TableRow sx={{ backgroundColor: 'var(--coca-cola-black)' }}>
-                  <TableCell sx={{ color: 'var(--coca-cola-white)' }}>Reason Code</TableCell>
-                  <TableCell sx={{ color: 'var(--coca-cola-white)' }}>Description</TableCell>
-                  <TableCell sx={{ color: 'var(--coca-cola-white)' }}>Actions</TableCell>
+                <TableRow sx={{ backgroundColor: 'black' }}>
+                  <TableCell sx={{ color: 'white' }}>Reason Code</TableCell>
+                  <TableCell sx={{ color: 'white' }}>Description</TableCell>
+                  <TableCell sx={{ color: 'white' }}>Actions</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -271,7 +271,7 @@ function MasterConfigurator() {
           <Typography variant="h6" sx={{ mt: 2 }}>Model Performance</Typography>
           <Table sx={{ mt: 1, '&:hover': { backgroundColor: '#f5f5f5' }, border: '1px solid #ddd', borderRadius: '10px' }}>
             <TableHead>
-              <TableRow sx={{ backgroundColor: '#C8102E', color: 'white' }}>
+              <TableRow sx={{ backgroundColor: 'black', color: 'white' }}>
                 <TableCell sx={{ color: 'white' }}>Model</TableCell>
                 <TableCell sx={{ color: 'white' }}>Score</TableCell>
               </TableRow>
@@ -288,7 +288,7 @@ function MasterConfigurator() {
           <Typography variant="h6" sx={{ mt: 2 }}>Top SKUs by Error</Typography>
           <Table sx={{ mt: 1, '&:hover': { backgroundColor: '#f5f5f5' }, border: '1px solid #ddd', borderRadius: '10px' }}>
             <TableHead>
-              <TableRow sx={{ backgroundColor: '#C8102E', color: 'white' }}>
+              <TableRow sx={{ backgroundColor: 'black', color: 'white' }}>
                 <TableCell sx={{ color: 'white' }}>SKU</TableCell>
                 <TableCell sx={{ color: 'white' }}>Error Rate</TableCell>
               </TableRow>

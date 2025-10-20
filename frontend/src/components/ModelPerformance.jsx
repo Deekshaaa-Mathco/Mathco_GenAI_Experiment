@@ -8,7 +8,7 @@ function ModelPerformance() {
   const [data, setData] = useState({ kpis: { accuracy: 87.3, bias: 2.1, time: 2 }, models: [], topSkus: [] });
 
   useEffect(() => {
-    axios.get('http://localhost:3001/api/model/performance')
+    axios.get('/api/model/performance')
       .then(res => {
         const apiData = res.data;
         // Ensure accuracy is a number
@@ -47,7 +47,7 @@ function ModelPerformance() {
       <Typography variant="h6" sx={{ mt: 2 }}>Model Performance</Typography>
       <Table sx={{ mt: 1, '&:hover': { backgroundColor: '#f5f5f5' }, border: '1px solid #ddd', borderRadius: '10px' }}>
         <TableHead>
-          <TableRow sx={{ backgroundColor: '#C8102E', color: 'white' }}>
+          <TableRow sx={{ backgroundColor: 'black', color: 'white' }}>
             <TableCell sx={{ color: 'white' }}>Model</TableCell>
             <TableCell sx={{ color: 'white' }}>Score</TableCell>
           </TableRow>
@@ -64,7 +64,7 @@ function ModelPerformance() {
       <Typography variant="h6" sx={{ mt: 2 }}>Top SKUs by Error</Typography>
       <Table sx={{ mt: 1, '&:hover': { backgroundColor: '#f5f5f5' }, border: '1px solid #ddd', borderRadius: '10px' }}>
         <TableHead>
-          <TableRow sx={{ backgroundColor: '#C8102E', color: 'white' }}>
+          <TableRow sx={{ backgroundColor: 'black', color: 'white' }}>
             <TableCell sx={{ color: 'white' }}>SKU</TableCell>
             <TableCell sx={{ color: 'white' }}>Error Rate</TableCell>
           </TableRow>

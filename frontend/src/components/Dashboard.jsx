@@ -18,17 +18,17 @@ function Dashboard() {
 
   useEffect(() => {
     // Fetch KPIs
-    axios.get('http://localhost:3001/api/dashboard/kpis')
+    axios.get('/api/dashboard/kpis')
       .then(res => setKpis({ ...kpis, ...res.data }))
       .catch(error => console.error('Error fetching KPIs:', error));
 
     // Fetch demand plans
-    axios.get('http://localhost:3001/api/scenarios')
+    axios.get('/api/scenarios')
       .then(res => setDemandPlans(res.data))
       .catch(error => console.error('Error fetching demand plans:', error));
 
     // Fetch supply plans
-    axios.get('http://localhost:3001/api/supply/plans')
+    axios.get('/api/supply/plans')
       .then(res => setSupplyPlans(res.data))
       .catch(error => console.error('Error fetching supply plans:', error));
   }, []);
@@ -80,12 +80,12 @@ function Dashboard() {
       <Typography variant="h6" sx={{ mt: 4, mb: 1, flexShrink: 0 }}>Planning Calendar</Typography>
       <Table sx={{ border: '1px solid #ddd', borderRadius: '10px', mb: 4, flexShrink: 0 }}>
         <TableHead>
-          <TableRow sx={{ backgroundColor: 'var(--coca-cola-black)', color: 'var(--coca-cola-white)' }}>
-            <TableCell sx={{ color: 'var(--coca-cola-white)' }}>Week</TableCell>
-            <TableCell sx={{ color: 'var(--coca-cola-white)' }}>Status</TableCell>
-            <TableCell sx={{ color: 'var(--coca-cola-white)', padding: '6px' }}>Activities</TableCell>
-            <TableCell sx={{ color: 'var(--coca-cola-white)', padding: '6px' }}>Owner</TableCell>
-            <TableCell sx={{ color: 'var(--coca-cola-white)' }}>Due Date</TableCell>
+          <TableRow sx={{ backgroundColor: 'black', color: 'white' }}>
+            <TableCell sx={{ color: 'white' }}>Week</TableCell>
+            <TableCell sx={{ color: 'white' }}>Status</TableCell>
+            <TableCell sx={{ color: 'white', padding: '6px' }}>Activities</TableCell>
+            <TableCell sx={{ color: 'white', padding: '6px' }}>Owner</TableCell>
+            <TableCell sx={{ color: 'white' }}>Due Date</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -134,12 +134,12 @@ function Dashboard() {
           <Box sx={{ flexGrow: 1, height: '100%', overflow: 'auto', border: '1px solid #ddd', borderRadius: '10px', width: '100%' }}>
             <Table sx={{ width: '100%' }}>
               <TableHead>
-                <TableRow sx={{ backgroundColor: 'var(--coca-cola-black)', color: 'var(--coca-cola-white)' }}>
-                  <TableCell sx={{ color: 'var(--coca-cola-white)' }}>Plan Name</TableCell>
-                  <TableCell sx={{ color: 'var(--coca-cola-white)' }}>Status</TableCell>
-                  <TableCell sx={{ color: 'var(--coca-cola-white)' }}>Created Date</TableCell>
-                  <TableCell sx={{ color: 'var(--coca-cola-white)' }}>Last Modified</TableCell>
-                  <TableCell sx={{ color: 'var(--coca-cola-white)' }}>Actions</TableCell>
+                <TableRow sx={{ backgroundColor: 'black', color: 'white' }}>
+                  <TableCell sx={{ color: 'white' }}>Plan Name</TableCell>
+                  <TableCell sx={{ color: 'white' }}>Status</TableCell>
+                  <TableCell sx={{ color: 'white' }}>Created Date</TableCell>
+                  <TableCell sx={{ color: 'white' }}>Last Modified</TableCell>
+                  <TableCell sx={{ color: 'white' }}>Actions</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -175,12 +175,12 @@ function Dashboard() {
           <Box sx={{ flexGrow: 1, height: '100%', overflow: 'auto', border: '1px solid #ddd', borderRadius: '10px', width: '100%' }}>
             <Table sx={{ width: '100%' }}>
               <TableHead>
-                <TableRow sx={{ backgroundColor: 'var(--coca-cola-black)', color: 'var(--coca-cola-white)' }}>
-                  <TableCell sx={{ color: 'var(--coca-cola-white)' }}>Plan Name</TableCell>
-                  <TableCell sx={{ color: 'var(--coca-cola-white)' }}>Status</TableCell>
-                  <TableCell sx={{ color: 'var(--coca-cola-white)' }}>Created Date</TableCell>
-                  <TableCell sx={{ color: 'var(--coca-cola-white)' }}>Last Modified</TableCell>
-                  <TableCell sx={{ color: 'var(--coca-cola-white)' }}>Actions</TableCell>
+                <TableRow sx={{ backgroundColor: 'black', color: 'white' }}>
+                  <TableCell sx={{ color: 'white' }}>Plan Name</TableCell>
+                  <TableCell sx={{ color: 'white' }}>Status</TableCell>
+                  <TableCell sx={{ color: 'white' }}>Created Date</TableCell>
+                  <TableCell sx={{ color: 'white' }}>Last Modified</TableCell>
+                  <TableCell sx={{ color: 'white' }}>Actions</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

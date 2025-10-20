@@ -7,6 +7,7 @@ const breadcrumbMap = {
   "/apply-constraints": ["Dashboard", "Demand Review", "Apply Constraints"],
   "/commercial-inputs": ["Dashboard", "Demand Review", "Commercial Inputs"],
   "/supply-planning": ["Dashboard", "Supply Planning"],
+  "/master-configurator": ["Dashboard", "Master Configurator"],
   "/model-performance": ["Dashboard", "Model Performance"],
   "/create-scenario": ["Dashboard", "Create Scenario"],
   "/simulate-scenarios": ["Dashboard", "Supply Planning", "Simulate Scenarios"],

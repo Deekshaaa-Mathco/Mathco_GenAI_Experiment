@@ -11,7 +11,7 @@ function CreateScenario() {
 
   const handleCreate = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/scenarios/create', {
+      const response = await fetch('/api/scenarios/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
