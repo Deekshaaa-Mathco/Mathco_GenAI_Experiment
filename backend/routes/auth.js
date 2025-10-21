@@ -6,7 +6,7 @@ const router = express.Router();
 const db = require('../db');
 
 // Secret key for JWT (in production, use environment variable)
-const JWT_SECRET = 'your-secret-key'; // Change this to a secure key
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // POST /api/auth/register
 router.post('/register', async (req, res) => {
