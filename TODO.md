@@ -1,30 +1,28 @@
-# TODO List for UI Changes
+# Deployment TODO List
 
-## 1. Registration Form Fields Font Color
-- [x] Verify/Register.jsx: Ensure all field inputs have black font color (already present).
+## Completed
+- [x] Set up Git Repository (done).
+- [x] Create a GitHub repository (done).
+- [x] Push code to GitHub (done).
+- [x] Set up Supabase Project (done).
+- [x] Get the DATABASE_URL from Supabase dashboard (done).
+- [x] Migrate existing database schema to Supabase (done).
+- [x] Deploy Frontend to Vercel (done).
 
-## 2. Demand Review Screen Filters
-- [x] DemandReview.jsx: Remove "<em>None</em>" from all Select filters.
-
-## 3. KPI Cards Background
-- [x] DemandReview.jsx: Remove light pink background from KPI cards.
-
-## 4. Table Headers Standardization
-- [x] DemandReview.jsx: Set table header to black color.
-- [x] ApplyConstraints.jsx: Update table headers to black.
-- [x] CommercialInputs.jsx: Update table headers to black.
-- [x] Dashboard.jsx: Update table headers to black.
-- [x] MasterConfigurator.jsx: Update table headers to black.
-- [x] ModelPerformance.jsx: Update table headers to black.
-- [x] ReasonCodes.jsx: Update table headers to black.
-- [x] SimulateScenarios.jsx: Update table headers to black.
-- [x] SimulationResults.jsx: Update table headers to black.
-- [x] SupplyPlanning.jsx: Update table headers to black.
-
-## 5. Header Welcome Message
-- [x] Header.jsx: Increase font size of welcome message.
-- [x] Header.jsx: Add user icon near the welcome message.
-
-## Followup Steps
-- [x] Run the frontend to verify changes.
-- [x] Check for any missed tables or inconsistencies.
+## Pending
+- [x] Prepare Backend for Deployment
+  - [x] Update backend/server.js to export app for Vercel (instead of listen).
+  - [x] Add vercel.json for Vercel configuration.
+  - [ ] Set environment variables in Vercel: DATABASE_URL, JWT_SECRET, etc.
+- [ ] Deploy Backend to Vercel
+  - [ ] Deploy backend from GitHub to Vercel.
+  - [ ] Get the deployed backend URL.
+- [ ] Update Frontend for Production
+  - [ ] Update frontend/src/context/AuthContext.jsx to use deployed backend URL instead of localhost:3001.
+  - [ ] Redeploy frontend to Vercel.
+- [ ] Test Deployed Application
+  - [ ] Test authentication, API calls, and database interactions.
+  - [ ] Verify CORS and environment variables.
+- [ ] Final Checks
+  - [ ] Ensure all routes work.
+  - [ ] Check for any hardcoded localhost references.

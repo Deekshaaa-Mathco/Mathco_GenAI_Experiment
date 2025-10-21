@@ -40,5 +40,11 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something went wrong!');
 });
 
-// Start server
-app.listen(port, () => console.log(`Server running on port ${port}`));
+// Export for Vercel
+module.exports = app;
+
+// Start server (only if not in Vercel environment)
+if (require.main === module) {
+  const port = process.env.PORT || 3001;
+  app.listen(port, () => console.log(`Server running on port ${port}`));
+}
