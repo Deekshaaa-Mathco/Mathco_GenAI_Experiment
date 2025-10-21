@@ -1,3 +1,4 @@
+require('dotenv').config(); // Ensure this is at the top
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -19,13 +20,13 @@ app.use('/api/scenarios', require('./routes/scenarios'));
 app.use('/api/mrp', require('./routes/mrp'));
 app.use('/api/constraints', require('./routes/constraints'));
 app.use('/api/commercial', require('./routes/commercial'));
-app.use('/api/skus', require('./routes/skus')); // New SKU route
-app.use('/api/dcs', require('./routes/dcs'));   // New DC route
-app.use('/api/reason-codes', require('./routes/reason_codes')); // New Reason Codes route
-app.use('/api/plant-line-mapping', require('./routes/plant_line_mapping')); // New Plant Line Mapping route
-app.use('/api/plant-dc-mapping', require('./routes/plant_dc_mapping')); // New Plant DC Mapping route
-app.use('/api/line-downtime-constraints', require('./routes/line_downtime_constraints')); // New Line Downtime Constraints route
-app.use('/api/plant-priority', require('./routes/plant_priority')); // New Plant Priority route
+app.use('/api/skus', require('./routes/skus'));
+app.use('/api/dcs', require('./routes/dcs'));
+app.use('/api/reason-codes', require('./routes/reason_codes'));
+app.use('/api/plant-line-mapping', require('./routes/plant_line_mapping'));
+app.use('/api/plant-dc-mapping', require('./routes/plant_dc_mapping'));
+app.use('/api/line-downtime-constraints', require('./routes/line_downtime_constraints'));
+app.use('/api/plant-priority', require('./routes/plant_priority'));
 
 // Health check
 app.get('/health', (req, res) => res.send('OK'));

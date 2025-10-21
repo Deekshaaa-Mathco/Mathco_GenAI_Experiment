@@ -257,33 +257,33 @@ function SupplyPlanning() {
                       <TableCell sx={{ color: 'black' }}>
                         {parseFloat(row.changeover_time) || 0}
                       </TableCell>
-                  <TableCell
-                    onDoubleClick={() =>
-                      handleCellEdit(
-                        'line',
-                        row.id,
-                        'utilization_percentage',
-                        Number(row.utilization_percentage || 0).toFixed(1)
-                      )
-                    }
-                    sx={{ color: 'black', cursor: 'pointer' }}
-                  >
-                    {editingCell?.type === 'line' &&
-                    editingCell?.id === row.id &&
-                    editingCell?.field === 'utilization_percentage' ? (
-                      <TextField
-                        value={editedValue}
-                        onChange={(e) => setEditedValue(e.target.value)}
-                        onBlur={handleSaveEdit}
-                        autoFocus
-                        size="small"
-                        type="number"
-                        inputProps={{ min: 0, max: 100, step: 0.1 }}
-                      />
-                    ) : (
-                      `${Number(row.utilization_percentage || 0).toFixed(1)}%`
-                    )}
-                  </TableCell>
+                      <TableCell
+                        onDoubleClick={() =>
+                          handleCellEdit(
+                            'line',
+                            row.id,
+                            'utilization_percentage',
+                            Number(row.utilization_percentage || 0).toFixed(1)
+                          )
+                        }
+                        sx={{ color: 'black', cursor: 'pointer' }}
+                      >
+                        {editingCell?.type === 'line' &&
+                        editingCell?.id === row.id &&
+                        editingCell?.field === 'utilization_percentage' ? (
+                          <TextField
+                            value={editedValue}
+                            onChange={(e) => setEditedValue(e.target.value)}
+                            onBlur={handleSaveEdit}
+                            autoFocus
+                            size="small"
+                            type="number"
+                            inputProps={{ min: 0, max: 100, step: 0.1 }}
+                          />
+                        ) : (
+                          `${Number(row.utilization_percentage || 0).toFixed(1)}%`
+                        )}
+                      </TableCell>
                   <TableCell>
                     <Button
                       onClick={() => alert(`Viewing details for Line: ${row.line_name}\nPlant: ${row.plant_name}\nWeekly Capacity: ${row.weekly_capacity}\nChangeover Time: ${row.changeover_time}\nUtilization: ${row.utilization_percentage}%`)}
