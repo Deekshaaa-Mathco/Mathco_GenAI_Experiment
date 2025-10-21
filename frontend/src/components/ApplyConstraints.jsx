@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import WarningIcon from '@mui/icons-material/Warning';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Breadcrumbs from './Breadcrumbs'; // Fixed: singular "Breadcrumb"
+import { API_BASE_URL } from '../config/api';
 
 function ApplyConstraints() {
   const [constraints, setConstraints] = useState({
@@ -15,7 +16,7 @@ function ApplyConstraints() {
   const handleSaveContinue = async () => {
     try {
       // Save constraints to backend
-      await fetch('api/constraints/update', {
+      await fetch(`${API_BASE_URL}/api/constraints/update`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

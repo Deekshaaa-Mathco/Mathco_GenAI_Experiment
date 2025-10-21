@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { API_BASE_URL } from '../config/api';
 
 function ReasonCodes() {
   const [reasonCodes, setReasonCodes] = useState([]);
@@ -14,7 +15,7 @@ function ReasonCodes() {
   }, []);
 
   const fetchReasonCodes = async () => {
-    const response = await axios.get('/api/reason-codes');
+    const response = await axios.get(`${API_BASE_URL}/api/reason-codes`);
     setReasonCodes(response.data);
   };
 
@@ -39,10 +40,10 @@ function ReasonCodes() {
     try {
       if (editingReasonCode) {
         // Update existing reason code
-        await axios.put(`/api/reason-codes/${editingReasonCode.id}`, newReasonCode);
+        await axios.put(`${API_BASE_URL}/api/reason-codes/${editingReasonCode.id}`, newReasonCode);
       } else {
         // Create new reason code
-        await axios.post('/api/reason-codes', newReasonCode);
+        await axios.post(`${API_BASE_URL}/api/reason-codes`, newReasonCode);
       }
       fetchReasonCodes();
       handleClose();
@@ -53,7 +54,7 @@ function ReasonCodes() {
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`/api/reason-codes/${id}`);
+    await axios.delete(`${API_BASE_URL}/api/reason-codes/${id}`);
     fetchReasonCodes();
   };
 

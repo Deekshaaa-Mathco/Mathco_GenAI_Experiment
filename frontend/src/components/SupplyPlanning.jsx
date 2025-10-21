@@ -20,6 +20,7 @@ import {
   Tab,
 } from '@mui/material';
 import Breadcrumbs from './Breadcrumbs';
+import { API_BASE_URL } from '../config/api';
 import {
   LineChart,
   Line,
@@ -49,7 +50,7 @@ function SupplyPlanning() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const res = await axios.get('/api/supply/planning');
+        const res = await axios.get(`${API_BASE_URL}/api/supply/planning`);
         setData(res.data || {});
       } catch (err) {
         console.error('API Error:', err);
@@ -63,9 +64,9 @@ function SupplyPlanning() {
 
   const applyScenario = async (scenarioName) => {
     try {
-      await axios.post('/api/supply/apply-scenario', { scenario: scenarioName });
+      await axios.post(`${API_BASE_URL}/api/supply/apply-scenario`, { scenario: scenarioName });
       // Refresh data after applying scenario
-      const res = await axios.get('/api/supply/planning');
+      const res = await axios.get(`${API_BASE_URL}/api/supply/planning`);
       setData(res.data || {});
       alert(`${scenarioName} applied successfully!`);
     } catch (error) {
@@ -116,10 +117,10 @@ function SupplyPlanning() {
       }
 
       try {
-        await axios.put(`/supply/utilization/${type}/${id}`, {
+        await axios.put(`${API_BASE_URL}/supply/utilization/${type}/${id}`, {
           value: newCapacity,
         });
-        const res = await axios.get('/api/supply/planning');
+        const res = await axios.get(`${API_BASE_URL}/api/supply/planning`);
         setData(res.data || {});
         setEditingCell(null);
         setEditedValue('');

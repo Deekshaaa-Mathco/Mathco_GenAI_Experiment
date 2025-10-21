@@ -1,28 +1,32 @@
-# Deployment TODO List
+# TODO: Fix API URLs for Vercel Deployment
 
-## Completed
-- [x] Set up Git Repository (done).
-- [x] Create a GitHub repository (done).
-- [x] Push code to GitHub (done).
-- [x] Set up Supabase Project (done).
-- [x] Get the DATABASE_URL from Supabase dashboard (done).
-- [x] Migrate existing database schema to Supabase (done).
-- [x] Deploy Frontend to Vercel (done).
+## Information Gathered
+- Frontend deployed on Vercel: https://mathco-gen-ai-experiment-6ld6.vercel.app
+- Backend deployed on Vercel: https://mathco-gen-ai-experiment-nzkisklaf-deekshashri-ss-projects.vercel.app
+- AuthContext.jsx already uses API_BASE_URL for auth endpoints
+- Many components use relative URLs like '/api/...' which won't work across domains
+- API_BASE_URL config exists in frontend/src/config/api.js but needs updating to new backend URL
+- Backend has CORS headers configured in vercel.json and server.js
 
-## Pending
-- [x] Prepare Backend for Deployment
-  - [x] Update backend/server.js to export app for Vercel (instead of listen).
-  - [x] Add vercel.json for Vercel configuration.
-  - [ ] Set environment variables in Vercel: DATABASE_URL, JWT_SECRET, etc.
-- [ ] Deploy Backend to Vercel
-  - [ ] Deploy backend from GitHub to Vercel.
-  - [ ] Get the deployed backend URL.
-- [x] Update Frontend for Production
-  - [x] Update frontend/src/context/AuthContext.jsx to use deployed backend URL instead of localhost:3001.
-  - [ ] Redeploy frontend to Vercel.
-- [ ] Test Deployed Application
-  - [ ] Test authentication, API calls, and database interactions.
-  - [ ] Verify CORS and environment variables.
-- [ ] Final Checks
-  - [ ] Ensure all routes work.
-  - [ ] Check for any hardcoded localhost references.
+## Plan
+1. Update API_BASE_URL in frontend/src/config/api.js to new backend URL
+2. Update all axios calls in components to use API_BASE_URL from config
+3. Update all fetch calls to use API_BASE_URL
+4. Ensure consistent API URL usage across all components
+
+## Dependent Files to be edited
+- frontend/src/config/api.js ✅
+- frontend/src/components/Dashboard.jsx ✅
+- frontend/src/components/DemandReview.jsx (already using API_BASE_URL, but verify) ✅
+- frontend/src/components/MasterConfigurator.jsx (already using API_BASE_URL) ✅
+- frontend/src/components/ReasonCodes.jsx ✅
+- frontend/src/components/SupplyPlanning.jsx ✅
+- frontend/src/components/ModelPerformance.jsx ✅
+- frontend/src/components/CommercialInputs.jsx ✅
+- frontend/src/components/CreateScenario.jsx ✅
+- frontend/src/components/ApplyConstraints.jsx ✅
+
+## Followup steps
+- Test API calls after deployment
+- Verify CORS is working properly
+- Build and deploy frontend

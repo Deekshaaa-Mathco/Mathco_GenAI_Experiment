@@ -7,10 +7,12 @@ console.log('Loaded DATABASE_URL:', process.env.DATABASE_URL);
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: {
+  ssl: process.env.NODE_ENV === 'production' ? {
     rejectUnauthorized: true,           // ✅ SSL ENFORCED (production secure)
     requestCert: true,
     require: true
+  } : {
+    rejectUnauthorized: false,           // Allow self-signed certificates for development
   }
 });
 

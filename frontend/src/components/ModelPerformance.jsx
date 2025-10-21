@@ -3,12 +3,13 @@ import axios from 'axios';
 import { Card, CardContent, Typography, Table, TableBody, TableRow, TableCell, TableHead, Grid, Button } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Breadcrumbs from './Breadcrumbs';
+import { API_BASE_URL } from '../config/api';
 
 function ModelPerformance() {
   const [data, setData] = useState({ kpis: { accuracy: 87.3, bias: 2.1, time: 2 }, models: [], topSkus: [] });
 
   useEffect(() => {
-    axios.get('/api/model/performance')
+    axios.get(`${API_BASE_URL}/api/model/performance`)
       .then(res => {
         const apiData = res.data;
         // Ensure accuracy is a number
