@@ -20,6 +20,7 @@ import {
   CardContent,
 } from '@mui/material';
 import axios from 'axios';
+import { API_BASE_URL } from '../config/api';
 import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import { useAuth } from '../context/AuthContext';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -58,7 +59,7 @@ function DemandReview() {
   useEffect(() => {
     const fetchAllForecastData = async () => {
       try {
-        const res = await axios.get('/api/demand/review');
+        const res = await axios.get(`${API_BASE_URL}/api/demand/review`);
         const forecastData = res.data.forecast.map(item => ({
           ...item,
           forecast_volume: parseFloat(item.forecast_volume),
@@ -75,13 +76,13 @@ function DemandReview() {
     const fetchFilterOptions = async () => {
       try {
         const [skusRes, dcsRes, segmentsRes, categoriesRes, brandsRes, packSizesRes, packTypesRes] = await Promise.all([
-          axios.get('/api/skus'),
-          axios.get('/api/dcs'),
-          axios.get('/api/demand/segments'),
-          axios.get('/api/demand/categories'),
-          axios.get('/api/demand/brands'),
-          axios.get('/api/demand/pack-sizes'),
-          axios.get('/api/demand/pack-types'),
+          axios.get(`${API_BASE_URL}/api/skus`),
+          axios.get(`${API_BASE_URL}/api/dcs`),
+          axios.get(`${API_BASE_URL}/api/demand/segments`),
+          axios.get(`${API_BASE_URL}/api/demand/categories`),
+          axios.get(`${API_BASE_URL}/api/demand/brands`),
+          axios.get(`${API_BASE_URL}/api/demand/pack-sizes`),
+          axios.get(`${API_BASE_URL}/api/demand/pack-types`),
         ]);
         setFilterOptions({
           skus: skusRes.data,
@@ -108,7 +109,7 @@ function DemandReview() {
           startWeek: filters.startWeek || 45,
           endWeek: filters.endWeek || 52,
         };
-        const res = await axios.get('/api/demand/review', { params });
+        const res = await axios.get(`${API_BASE_URL}/api/demand/review`, { params });
         const forecastData = res.data.forecast.map(item => ({
           ...item,
           forecast_volume: parseFloat(item.forecast_volume),
@@ -167,7 +168,7 @@ function DemandReview() {
     }
 
     try {
-      await axios.put(`/api/demand/forecast/${forecastId}`, {
+      await axios.put(`${API_BASE_URL}/api/demand/forecast/${forecastId}`, {
         adjustment_volume,
         reason_code: reasonCode,
         userId: user.id,

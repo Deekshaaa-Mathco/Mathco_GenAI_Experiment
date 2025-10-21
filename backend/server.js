@@ -6,7 +6,10 @@ const pool = require('./db'); // Imported but not used directly here
 const app = express();
 const port = 3001;
 
-app.use(cors());
+app.use(cors({
+  origin: ['https://mathco-gen-ai-experiment-6ld6.vercel.app', 'http://localhost:3000'],
+  credentials: true
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
