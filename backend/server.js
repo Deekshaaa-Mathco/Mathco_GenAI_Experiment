@@ -7,7 +7,7 @@ const app = express();
 const port = 3001;
 
 app.use(cors({
-  origin: ['https://mathco-gen-ai-experiment-6ld6.vercel.app', 'http://localhost:3000'],
+  origin: ['https://mathco-gen-ai-experiment-6ld6-q8muq8t9l-deekshashri-ss-projects.vercel.app', 'http://localhost:3000'],
   credentials: true
 }));
 app.use(cors()); // enable pre-flight across-the-board
