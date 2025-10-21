@@ -6,11 +6,21 @@ const pool = require('./db'); // Imported but not used directly here
 const app = express();
 const port = 3001;
 
+const allowedOrigins = [
+  'http://localhost:3000',
+];
+
 app.use(cors({
-  origin: ['https://mathco-gen-ai-experiment-6ld6.vercel.app', 'https://mathco-gen-ai-experiment-6ld6-q8muq8t9l-deekshashri-ss-projects.vercel.app', 'http://localhost:3000'],
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) !== -1 || origin.endsWith('.vercel.app')) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
-app.use(cors()); // enable pre-flight across-the-board
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
