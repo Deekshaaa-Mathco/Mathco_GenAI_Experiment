@@ -17,8 +17,8 @@
 - [ ] Deploy Backend to Vercel
   - [ ] Deploy backend from GitHub to Vercel.
   - [ ] Get the deployed backend URL.
-- [ ] Update Frontend for Production
-  - [ ] Update frontend/src/context/AuthContext.jsx to use deployed backend URL instead of localhost:3001.
+- [x] Update Frontend for Production
+  - [x] Update frontend/src/context/AuthContext.jsx to use deployed backend URL instead of localhost:3001.
   - [ ] Redeploy frontend to Vercel.
 - [ ] Test Deployed Application
   - [ ] Test authentication, API calls, and database interactions.

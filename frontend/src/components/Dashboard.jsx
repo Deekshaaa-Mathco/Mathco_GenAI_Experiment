@@ -5,6 +5,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import WarningIcon from '@mui/icons-material/Warning';
 import { Link } from 'react-router-dom';
 import Breadcrumbs from './Breadcrumbs';
+import { API_BASE_URL } from '../config/api';
 
 function Dashboard() {
   const [kpis, setKpis] = useState({
@@ -18,12 +19,12 @@ function Dashboard() {
 
   useEffect(() => {
     // Fetch KPIs
-    axios.get('/api/dashboard/kpis')
+    axios.get(`${API_BASE_URL}/api/dashboard/kpis`)
       .then(res => setKpis({ ...kpis, ...res.data }))
       .catch(error => console.error('Error fetching KPIs:', error));
 
     // Fetch demand plans
-    axios.get('/api/scenarios')
+    axios.get(`${API_BASE_URL}/api/scenarios`)
       .then(res => {
         if (Array.isArray(res.data)) {
           setDemandPlans(res.data);
@@ -38,7 +39,7 @@ function Dashboard() {
       });
 
     // Fetch supply plans
-    axios.get('/api/supply/plans')
+    axios.get(`${API_BASE_URL}/api/supply/plans`)
       .then(res => {
         if (Array.isArray(res.data)) {
           setSupplyPlans(res.data);

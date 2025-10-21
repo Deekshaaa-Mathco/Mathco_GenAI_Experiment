@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, TextField, Select, MenuItem, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from '../config/api';
 
 function CreateScenario() {
   const [open, setOpen] = useState(true);
@@ -11,7 +12,7 @@ function CreateScenario() {
 
   const handleCreate = async () => {
     try {
-      const response = await fetch('/api/scenarios/create', {
+      const response = await fetch(`${API_BASE_URL}/api/scenarios/create`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

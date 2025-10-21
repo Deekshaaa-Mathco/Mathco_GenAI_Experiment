@@ -4,6 +4,7 @@ import { Card, CardContent, Typography, Table, TableBody, TableRow, TableCell, T
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import WarningIcon from '@mui/icons-material/Warning';
 import Breadcrumbs from './Breadcrumbs';
+import { API_BASE_URL } from '../config/api';
 
 function MasterConfigurator() {
   const [tabValue, setTabValue] = useState(0);
@@ -25,7 +26,7 @@ function MasterConfigurator() {
 
   const fetchModelPerformance = async () => {
     try {
-      const res = await axios.get('/api/model/performance');
+      const res = await axios.get(`${API_BASE_URL}/api/model/performance`);
       const apiData = res.data;
       if (apiData.kpis && typeof apiData.kpis.accuracy !== 'number') {
         apiData.kpis.accuracy = 87.3;
@@ -38,7 +39,7 @@ function MasterConfigurator() {
 
   const fetchReasonCodes = async () => {
     try {
-      const response = await axios.get('/api/reason-codes');
+      const response = await axios.get(`${API_BASE_URL}/api/reason-codes`);
       setReasonCodes(response.data);
     } catch (error) {
       console.error('Error fetching reason codes:', error);
@@ -69,9 +70,9 @@ function MasterConfigurator() {
   const handleSave = async () => {
     try {
       if (editingReasonCode) {
-        await axios.put(`/api/reason-codes/${editingReasonCode.id}`, newReasonCode);
+        await axios.put(`${API_BASE_URL}/api/reason-codes/${editingReasonCode.id}`, newReasonCode);
       } else {
-        await axios.post('/api/reason-codes', newReasonCode);
+        await axios.post(`${API_BASE_URL}/api/reason-codes`, newReasonCode);
       }
       fetchReasonCodes();
       handleClose();
@@ -83,7 +84,7 @@ function MasterConfigurator() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/api/reason-codes/${id}`);
+      await axios.delete(`${API_BASE_URL}/api/reason-codes/${id}`);
       fetchReasonCodes();
     } catch (error) {
       console.error('Error deleting reason code:', error);
@@ -171,7 +172,7 @@ function MasterConfigurator() {
               </Table>
               <Button variant="contained" onClick={async () => {
                 try {
-                  await fetch('/api/commercial/adjustments', {
+                  await fetch(`${API_BASE_URL}/api/commercial/adjustments`, {
                     method: 'POST',
                     headers: {
                       'Content-Type': 'application/json',

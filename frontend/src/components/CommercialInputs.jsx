@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, Typography, Button, TextField, Select, MenuItem, Table, TableBody, TableRow, TableCell, TableHead, Autocomplete } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
 import Breadcrumbs from './Breadcrumbs';
+import { API_BASE_URL } from '../config/api';
 
 function CommercialInputs() {
   const location = useLocation();
@@ -16,7 +17,7 @@ function CommercialInputs() {
 
   useEffect(() => {
     if (skuFromQuery) {
-      fetch(`/api/commercial/adjustments/${skuFromQuery}`)
+      fetch(`${API_BASE_URL}/api/commercial/adjustments/${skuFromQuery}`)
         .then(res => res.json())
         .then(data => setAdjustments(data))
         .catch(err => console.error('Error fetching adjustments:', err));
@@ -43,7 +44,7 @@ function CommercialInputs() {
   const handleSaveContinue = async () => {
     try {
       // Save adjustments to backend
-      await fetch('/api/commercial/adjustments', {
+      await fetch(`${API_BASE_URL}/api/commercial/adjustments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
