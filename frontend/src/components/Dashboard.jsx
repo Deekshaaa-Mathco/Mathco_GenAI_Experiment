@@ -24,13 +24,33 @@ function Dashboard() {
 
     // Fetch demand plans
     axios.get('/api/scenarios')
-      .then(res => setDemandPlans(res.data))
-      .catch(error => console.error('Error fetching demand plans:', error));
+      .then(res => {
+        if (Array.isArray(res.data)) {
+          setDemandPlans(res.data);
+        } else {
+          console.error('Unexpected data format for demand plans:', res.data);
+          setDemandPlans([]);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching demand plans:', error);
+        setDemandPlans([]);
+      });
 
     // Fetch supply plans
     axios.get('/api/supply/plans')
-      .then(res => setSupplyPlans(res.data))
-      .catch(error => console.error('Error fetching supply plans:', error));
+      .then(res => {
+        if (Array.isArray(res.data)) {
+          setSupplyPlans(res.data);
+        } else {
+          console.error('Unexpected data format for supply plans:', res.data);
+          setSupplyPlans([]);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching supply plans:', error);
+        setSupplyPlans([]);
+      });
   }, []);
 
   return (
@@ -143,7 +163,7 @@ function Dashboard() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {demandPlans.map((plan) => (
+                {Array.isArray(demandPlans) && demandPlans.map((plan) => (
                   <TableRow key={plan.id} sx={{ '&:hover': { backgroundColor: '#e0e0e0' } }}>
                     <TableCell>{plan.name}</TableCell>
                     <TableCell>{plan.status}</TableCell>
@@ -184,7 +204,7 @@ function Dashboard() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {supplyPlans.map((plan) => (
+                {Array.isArray(supplyPlans) && supplyPlans.map((plan) => (
                   <TableRow key={plan.id} sx={{ '&:hover': { backgroundColor: '#e0e0e0' } }}>
                     <TableCell>{plan.name}</TableCell>
                     <TableCell>{plan.status}</TableCell>
