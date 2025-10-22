@@ -11,7 +11,7 @@ app.use(cors({
   origin: ['http://localhost:3000', 'https://mathco-gen-ai-experiment-frontend.vercel.app'],
   credentials: true
 }));
-app.options('*', cors());
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
