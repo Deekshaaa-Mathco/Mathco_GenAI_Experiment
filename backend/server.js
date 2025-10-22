@@ -1,24 +1,14 @@
-require('dotenv').config(); // Ensure this is at the top
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const pool = require('./db'); // Imported but not used directly here
+const db = require('./db');
+
 const app = express();
-const port = 3001;
 
-const allowedOrigins = [
-  'http://localhost:3000',
-];
-
+// Middleware
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) !== -1 || origin.endsWith('.vercel.app')) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: ['http://localhost:3000', 'https://mathco-gen-ai-experiment-6ld6.vercel.app'],  // Local + Vercel frontend
   credentials: true
 }));
 app.use(bodyParser.json());
@@ -43,22 +33,14 @@ app.use('/api/line-downtime-constraints', require('./routes/line_downtime_constr
 app.use('/api/plant-priority', require('./routes/plant_priority'));
 
 // Health check
-app.get('/health', (req, res) => res.send('OK'));
-
-// Root route
-app.get('/', (req, res) => res.send('Coca-Cola Supply Planning Backend'));
-
-// Global error handler
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something went wrong!');
+app.get('/health', async (req, res) => {
+  try {
+    await db.query('SELECT 1');
+    res.json({ status: 'OK', database: 'Connected' });
+  } catch (err) {
+    res.status(500).json({ status: 'Error', database: 'Failed' });
+  }
 });
 
-// Export for Vercel
-module.exports = app;
-
-// Start server (only if not in Vercel environment)
-if (require.main === module) {
-  const port = process.env.PORT || 3001;
-  app.listen(port, () => console.log(`Server running on port ${port}`));
-}
+// Vercel requires module.exports for serverless
+module.exports = app;  // ← Key for Vercel

@@ -77,7 +77,7 @@ const theme = createTheme({
 });
 
 function AppContent() {
-  const { isAuthenticated, login } = useAuth();
+  const { isAuthenticated, user } = useAuth();
 
   if (!isAuthenticated) {
     return (
@@ -90,11 +90,11 @@ function AppContent() {
   }
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '150vh' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Header />
       <Box sx={{ display: 'flex', flexGrow: 1, paddingTop: '80px' }}>
         <Sidebar />
-        <Box component="main" sx={{ flexGrow: 1, ml: 250, p: '8px 16px 16px 16px', m: 0, mr: 1, mt: 0}}>
+        <Box component="main" sx={{ flexGrow: 1, ml: 250, p: '8px 16px 16px 16px', m: 0, mr: 1, mt: 0 }}>
           <Routes>
             <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
             <Route path="/demand-review" element={<PrivateRoute><DemandReview /></PrivateRoute>} />
@@ -102,6 +102,7 @@ function AppContent() {
             <Route path="/master-configurator" element={<PrivateRoute><MasterConfigurator /></PrivateRoute>} />
             <Route path="/create-scenario" element={<PrivateRoute><CreateScenario /></PrivateRoute>} />
             <Route path="/simulate-scenarios" element={<PrivateRoute><SimulateScenarios /></PrivateRoute>} />
+            <Route path="/simulation-results" element={<PrivateRoute><SimulationResults /></PrivateRoute>} />
             <Route path="/publish-plan" element={<PrivateRoute><PublishPlan /></PrivateRoute>} />
             <Route path="/plan-published" element={<PrivateRoute><PlanPublished /></PrivateRoute>} />
             <Route path="/login" element={<Navigate to="/" />} />
