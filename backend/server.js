@@ -8,7 +8,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://mathco-gen-ai-experiment-6ld6.vercel.app'],  // Local + Vercel frontend
+  origin: ['http://localhost:3000', 'https://mathco-gen-ai-experiment-6ld6.vercel.app'],
   credentials: true
 }));
 app.use(bodyParser.json());
@@ -42,5 +42,8 @@ app.get('/health', async (req, res) => {
   }
 });
 
-// Vercel requires module.exports for serverless
-module.exports = app;  // ← Key for Vercel
+// Root route for Vercel
+app.get('/', (req, res) => res.json({ message: 'Backend is running!' }));
+
+// EXPORT FOR VERCEL
+module.exports = app;

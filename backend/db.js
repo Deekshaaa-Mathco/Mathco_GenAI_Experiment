@@ -6,6 +6,7 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false }
 });
 
+// Test connection
 pool.connect()
   .then(() => console.log('✅ DATABASE CONNECTED!'))
   .catch(err => console.error('❌ DATABASE ERROR:', err.message));
