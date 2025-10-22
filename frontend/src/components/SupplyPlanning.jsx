@@ -197,14 +197,6 @@ function SupplyPlanning() {
                         )}
                       </TableCell>
                       <TableCell>
-                        <Button
-                          onClick={() => alert(`Viewing details for DC: ${row.name}\nMax Capacity: ${row.max_capacity}\nAvailable Capacity: ${row.available_capacity}\nUtilization: ${row.utilization_percentage}%`)}
-                          size="small"
-                          variant="outlined"
-                          sx={{ mr: 1, borderColor: '#C8102E', color: '#C8102E', '&:hover': { backgroundColor: '#C8102E', color: '#FFFFFF' } }}
-                        >
-                          View
-                        </Button>
                         {editingCell?.type === 'dc' &&
                           editingCell?.id === row.id &&
                           editingCell?.field === 'utilization_percentage' && (

@@ -18,6 +18,7 @@ import {
   TableRow,
   Card,
   CardContent,
+  Autocomplete,
 } from '@mui/material';
 import axios from 'axios';
 import { API_BASE_URL } from '../config/api';
@@ -55,6 +56,9 @@ function DemandReview() {
   const [editingCell, setEditingCell] = useState(null);
   const [editedValue, setEditedValue] = useState('');
   const [reasonCode, setReasonCode] = useState('');
+  const [editingReason, setEditingReason] = useState(null);
+  const [editedReason, setEditedReason] = useState('');
+  const [reasonCodes, setReasonCodes] = useState([]);
 
   useEffect(() => {
     const fetchAllForecastData = async () => {
@@ -111,8 +115,19 @@ function DemandReview() {
         });
       }
     };
+    const fetchReasonCodes = async () => {
+      try {
+        const res = await axios.get(`${API_BASE_URL}/api/reason-codes`);
+        setReasonCodes(Array.isArray(res.data) ? res.data : []);
+      } catch (error) {
+        console.error('Error fetching reason codes:', error);
+        setReasonCodes([]);
+      }
+    };
+
     fetchAllForecastData();
     fetchFilterOptions();
+    fetchReasonCodes();
   }, []);
 
   useEffect(() => {
@@ -174,6 +189,28 @@ function DemandReview() {
     setEditedValue(value);
   };
 
+  const handleReasonEdit = (rowId, value) => {
+    setEditingReason(rowId);
+    setEditedReason(value);
+  };
+
+  const handleSaveReason = async (forecastId) => {
+    if (!editingReason) return;
+
+    try {
+      await axios.put(`${API_BASE_URL}/api/demand/forecast/${forecastId}`, {
+        adjustment_reason: editedReason,
+        userId: user.id,
+      });
+      setFilters({ ...filters });
+      setEditingReason(null);
+      setEditedReason('');
+    } catch (error) {
+      console.error('Error updating reason:', error);
+      alert('Failed to update reason.');
+    }
+  };
+
   const handleSaveEdit = async (forecastId, originalValue) => {
     if (!editingCell) return;
 
@@ -226,6 +263,8 @@ function DemandReview() {
   return (
     <Box sx={{ p: 3 }}>
       <Breadcrumbs />
+      {/* Segmentation KPI Cards - COMMENTED OUT */}
+      {/*
       <Grid container spacing={2} sx={{ mt: 2 }}>
         {Object.entries(segmentationData).map(([seg, { count, volume, service }]) => (
           <Grid item xs={3} key={seg}>
@@ -239,6 +278,7 @@ function DemandReview() {
           </Grid>
         ))}
       </Grid>
+      */}
 
       <Paper elevation={2} sx={{ p: 2, mt: 2 }}>
         <Typography variant="h6" gutterBottom>Demand by Category</Typography>
@@ -481,22 +521,22 @@ function DemandReview() {
         <TableContainer component={Paper}>
           <Table stickyHeader>
             <TableHead>
-              <TableRow>
-                <TableCell>SKU</TableCell>
-                <TableCell>DC</TableCell>
-                <TableCell>Segment</TableCell>
-                <TableCell>Category</TableCell>
-                <TableCell>Brand</TableCell>
-                <TableCell>Pack Size</TableCell>
-                <TableCell>Pack Type</TableCell>
-                <TableCell>Week</TableCell>
-                <TableCell>Forecast Volume</TableCell>
-                <TableCell>Actual Volume</TableCell>
-                <TableCell>Bias</TableCell>
-                <TableCell>Model Type</TableCell>
-                <TableCell>Adjustment</TableCell>
-                <TableCell>Reason</TableCell>
-                <TableCell>Actions</TableCell>
+              <TableRow sx={{ backgroundColor: 'black', color: 'white' }}>
+                <TableCell sx={{ color: 'white' }}>SKU</TableCell>
+                <TableCell sx={{ color: 'white' }}>DC</TableCell>
+                <TableCell sx={{ color: 'white' }}>Segment</TableCell>
+                <TableCell sx={{ color: 'white' }}>Category</TableCell>
+                <TableCell sx={{ color: 'white' }}>Brand</TableCell>
+                <TableCell sx={{ color: 'white' }}>Pack Size</TableCell>
+                <TableCell sx={{ color: 'white' }}>Pack Type</TableCell>
+                <TableCell sx={{ color: 'white' }}>Week</TableCell>
+                <TableCell sx={{ color: 'white' }}>Forecast Volume</TableCell>
+                <TableCell sx={{ color: 'white' }}>Actual Volume</TableCell>
+                <TableCell sx={{ color: 'white' }}>Bias</TableCell>
+                <TableCell sx={{ color: 'white' }}>Model Type</TableCell>
+                <TableCell sx={{ color: 'white' }}>Adjustment</TableCell>
+                <TableCell sx={{ color: 'white' }}>Reason</TableCell>
+                <TableCell sx={{ color: 'white' }}>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -529,10 +569,37 @@ function DemandReview() {
                   <TableCell>{row.bias}</TableCell>
                   <TableCell>{row.model_type}</TableCell>
                   <TableCell>{row.adjustment_volume}</TableCell>
-                  <TableCell>{row.adjustment_reason}</TableCell>
+                  <TableCell
+                    onDoubleClick={() => handleReasonEdit(row.id, row.adjustment_reason)}
+                  >
+                    {editingReason === row.id ? (
+                      <Autocomplete
+                        freeSolo
+                        options={reasonCodes.map((code) => code.reason)}
+                        value={editedReason}
+                        onChange={(event, newValue) => setEditedReason(newValue || '')}
+                        onInputChange={(event, newInputValue) => setEditedReason(newInputValue)}
+                        onBlur={() => handleSaveReason(row.id)}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            size="small"
+                            sx={{ minWidth: 150 }}
+                            placeholder="Select or type new reason"
+                          />
+                        )}
+                        autoFocus
+                      />
+                    ) : (
+                      row.adjustment_reason
+                    )}
+                  </TableCell>
                   <TableCell>
                     <Button
-                      onClick={() => handleCellEdit(row.sku_id + '-' + row.dc_id + '-' + row.week, 'forecast_volume', row.forecast_volume)}
+                      onClick={() => {
+                        handleCellEdit(row.sku_id + '-' + row.dc_id + '-' + row.week, 'forecast_volume', row.forecast_volume);
+                        handleReasonEdit(row.id, row.adjustment_reason);
+                      }}
                       size="small"
                       variant="outlined"
                       sx={{ mr: 1, borderColor: '#C8102E', color: '#C8102E', '&:hover': { backgroundColor: '#C8102E', color: '#FFFFFF' } }}
