@@ -60,16 +60,21 @@ function DemandReview() {
     const fetchAllForecastData = async () => {
       try {
         const res = await axios.get(`${API_BASE_URL}/api/demand/review`);
-        const forecastData = res.data.forecast.map(item => ({
-          ...item,
-          forecast_volume: parseFloat(item.forecast_volume),
-          actual_volume: parseFloat(item.actual_volume),
-          bias: parseFloat(item.bias),
-          adjustment_volume: parseFloat(item.adjustment_volume),
-        }));
-        setAllForecastData(forecastData);
+        if (res.data && res.data.forecast && Array.isArray(res.data.forecast)) {
+          const forecastData = res.data.forecast.map(item => ({
+            ...item,
+            forecast_volume: parseFloat(item.forecast_volume),
+            actual_volume: parseFloat(item.actual_volume),
+            bias: parseFloat(item.bias),
+            adjustment_volume: parseFloat(item.adjustment_volume),
+          }));
+          setAllForecastData(forecastData);
+        } else {
+          setAllForecastData([]);
+        }
       } catch (error) {
         console.error('Error fetching all forecast data:', error);
+        setAllForecastData([]);
       }
     };
 
@@ -85,16 +90,25 @@ function DemandReview() {
           axios.get(`${API_BASE_URL}/api/demand/pack-types`),
         ]);
         setFilterOptions({
-          skus: skusRes.data,
-          dcs: dcsRes.data,
-          segments: segmentsRes.data,
-          categories: categoriesRes.data,
-          brands: brandsRes.data,
-          packSizes: packSizesRes.data,
-          packTypes: packTypesRes.data,
+          skus: Array.isArray(skusRes.data) ? skusRes.data : [],
+          dcs: Array.isArray(dcsRes.data) ? dcsRes.data : [],
+          segments: Array.isArray(segmentsRes.data) ? segmentsRes.data : [],
+          categories: Array.isArray(categoriesRes.data) ? categoriesRes.data : [],
+          brands: Array.isArray(brandsRes.data) ? brandsRes.data : [],
+          packSizes: Array.isArray(packSizesRes.data) ? packSizesRes.data : [],
+          packTypes: Array.isArray(packTypesRes.data) ? packTypesRes.data : [],
         });
       } catch (error) {
         console.error('Error fetching filter options:', error);
+        setFilterOptions({
+          skus: [],
+          dcs: [],
+          segments: [],
+          categories: [],
+          brands: [],
+          packSizes: [],
+          packTypes: [],
+        });
       }
     };
     fetchAllForecastData();
@@ -110,17 +124,27 @@ function DemandReview() {
           endWeek: filters.endWeek || 52,
         };
         const res = await axios.get(`${API_BASE_URL}/api/demand/review`, { params });
-        const forecastData = res.data.forecast.map(item => ({
-          ...item,
-          forecast_volume: parseFloat(item.forecast_volume),
-          actual_volume: parseFloat(item.actual_volume),
-          bias: parseFloat(item.bias),
-          adjustment_volume: parseFloat(item.adjustment_volume),
-        }));
-        setForecastData(forecastData);
-        setSegmentationData(res.data.segmentation);
+        if (res.data && res.data.forecast && Array.isArray(res.data.forecast)) {
+          const forecastData = res.data.forecast.map(item => ({
+            ...item,
+            forecast_volume: parseFloat(item.forecast_volume),
+            actual_volume: parseFloat(item.actual_volume),
+            bias: parseFloat(item.bias),
+            adjustment_volume: parseFloat(item.adjustment_volume),
+          }));
+          setForecastData(forecastData);
+        } else {
+          setForecastData([]);
+        }
+        if (res.data && res.data.segmentation && typeof res.data.segmentation === 'object') {
+          setSegmentationData(res.data.segmentation);
+        } else {
+          setSegmentationData({});
+        }
       } catch (error) {
         console.error('Error fetching forecast data:', error);
+        setForecastData([]);
+        setSegmentationData({});
       }
     };
     fetchForecastData();
