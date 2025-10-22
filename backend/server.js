@@ -8,7 +8,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://mathco-gen-ai-experiment-6ld6.vercel.app'],
+  origin: ['http://localhost:3000', 'https://vercel.com/deekshashri-ss-projects/mathco-gen-ai-experiment-frontend/9hccEeQa27tguEs5cE6ybuW74Eny'],
   credentials: true
 }));
 app.use(bodyParser.json());
