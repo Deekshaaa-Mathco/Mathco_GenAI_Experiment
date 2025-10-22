@@ -3,8 +3,8 @@ import axios from 'axios';
 
 const AuthContext = createContext();
 
-// LOCAL BACKEND URL
-const API_BASE_URL = 'http://localhost:3001';
+// VERCEL BACKEND URL
+const API_BASE_URL = 'https://mathco-gen-ai-experiment-backend.vercel.app';
 
 export const useAuth = () => useContext(AuthContext);
 
@@ -16,27 +16,27 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem('token');
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      // Skip profile check for local dev
-      setUser({ username: 'admin', role: 'IT Admin' });
-      setLoading(false);
+      // Fetch profile
+      axios.get(`${API_BASE_URL}/api/auth/profile`)
+        .then(response => {
+          setUser(response.data.user);
+        })
+        .catch(() => {
+          localStorage.removeItem('token');
+          setUser(null);
+        })
+        .finally(() => setLoading(false));
     } else {
       setLoading(false);
     }
   }, []);
 
   const login = async (username, password) => {
-    console.log('🔐 Login attempt:', username);
-    
     const response = await axios.post(`${API_BASE_URL}/api/auth/login`, { username, password });
-    const { token, user: userData } = response.data;
-    
+    const { token, user } = response.data;
     localStorage.setItem('token', token);
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    setUser(userData);
-    
-    console.log('✅ LOGIN SUCCESS:', userData);
-    
-    // Navigate to dashboard
+    setUser(user);
     window.location.href = '/';
   };
 
@@ -49,7 +49,6 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('token');
     delete axios.defaults.headers.common['Authorization'];
     setUser(null);
-    window.location.href = '/login';
   };
 
   const value = {
