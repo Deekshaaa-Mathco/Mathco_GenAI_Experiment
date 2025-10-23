@@ -44,9 +44,7 @@ const theme = createTheme({
     },
     MuiDrawer: {
       styleOverrides: {
-        paper: {
-          // Removed global background override to allow component-specific styling
-        },
+        paper: {},
       },
     },
     MuiCard: {
@@ -119,7 +117,11 @@ function App() {
     <AuthProvider>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Router>
+        {/* ← FIX: ADD FUTURE FLAGS HERE! */}
+        <Router future={{
+          v7_startTransition: true,
+          v7_relativeSplatPath: true,
+        }}>
           <AppContent />
         </Router>
       </ThemeProvider>

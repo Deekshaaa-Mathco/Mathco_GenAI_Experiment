@@ -50,6 +50,9 @@ function Register() {
       }}
     >
       <Paper elevation={3} sx={{ p: 4, width: '100%', maxWidth: 400 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
+          <img src="/logo.png" alt="Coca-Cola Logo" style={{ height: '60px' }} />
+        </Box>
         <Typography variant="h4" component="h1" gutterBottom align="center" sx={{ color: 'var(--coca-cola-black)' }}>
           Register
         </Typography>
@@ -67,7 +70,7 @@ function Register() {
             autoFocus
             value={formData.username}
             onChange={handleChange}
-            sx={{ '& .MuiInputBase-input': { color: '#000000' } }}
+            sx={{ '& .MuiInputBase-input': { color: 'black' } }}
           />
           <TextField
             margin="normal"
@@ -80,7 +83,7 @@ function Register() {
             autoComplete="email"
             value={formData.email}
             onChange={handleChange}
-            sx={{ '& .MuiInputBase-input': { color: '#000000' } }}
+            sx={{ '& .MuiInputBase-input': { color: 'black' } }}
           />
           <FormControl fullWidth margin="normal">
             <InputLabel id="role-label">Role</InputLabel>
@@ -91,7 +94,7 @@ function Register() {
               value={formData.role}
               label="Role"
               onChange={handleChange}
-              sx={{ '& .MuiInputBase-input': { color: '#000000' } }}
+              sx={{ '& .MuiInputBase-input': { color: 'black' } }}
             >
               <MenuItem value="user">User</MenuItem>
               <MenuItem value="admin">Admin</MenuItem>
@@ -108,7 +111,7 @@ function Register() {
             autoComplete="new-password"
             value={formData.password}
             onChange={handleChange}
-            sx={{ '& .MuiInputBase-input': { color: '#000000' } }}
+            sx={{ '& .MuiInputBase-input': { color: 'black' } }}
           />
           <TextField
             margin="normal"
@@ -121,7 +124,7 @@ function Register() {
             autoComplete="new-password"
             value={formData.confirmPassword}
             onChange={handleChange}
-            sx={{ '& .MuiInputBase-input': { color: '#000000' } }}
+            sx={{ '& .MuiInputBase-input': { color: 'black' } }}
           />
           <Button
             type="submit"

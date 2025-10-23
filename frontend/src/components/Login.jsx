@@ -32,6 +32,9 @@ function Login() {
       }}
     >
       <Paper elevation={3} sx={{ p: 4, width: '100%', maxWidth: 400 }}>
+        {/* <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
+          <img src="/logo.png" alt="Coca-Cola Logo" style={{ height: '60px' }} />
+        </Box> */}
         <Typography variant="h4" component="h1" gutterBottom align="center" sx={{ color: 'var(--coca-cola-black)' }}>
           Login
         </Typography>
@@ -48,6 +51,7 @@ function Login() {
             autoFocus
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            sx={{ '& .MuiInputBase-input': { color: 'black' } }}
           />
           <TextField
             margin="normal"
@@ -60,6 +64,7 @@ function Login() {
             autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            sx={{ '& .MuiInputBase-input': { color: 'black' } }}
           />
           <Button
             type="submit"

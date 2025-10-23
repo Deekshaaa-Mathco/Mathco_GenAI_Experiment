@@ -100,7 +100,7 @@ function Dashboard() {
       */}
 
       {/* Planning Calendar Table */}
-      <Typography variant="h6" sx={{ mt: 4, mb: 1, flexShrink: 0 }}>Planning Calendar</Typography>
+      <Typography variant="h6" sx={{ mt: 0, mb: 1, flexShrink: 0 }}>Planning Calendar</Typography>
       <Table sx={{ border: '1px solid #ddd', borderRadius: '10px', mb: 4, flexShrink: 0 }}>
         <TableHead>
           <TableRow sx={{ backgroundColor: 'black', color: 'white' }}>
@@ -192,8 +192,11 @@ function Dashboard() {
 
         {/* Supply Plans Table */}
         <Grid item xs={6} md={6} sx={{ display: 'flex', flexDirection: 'column', height: '100%', width: '50%' }}>
-          <Box sx={{ mb: 2 }}>
-            <Typography variant="h6">Supply Plans</Typography>
+          <Box sx={{ mb: 3, display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
+            <Typography variant="h6" sx={{ mr: 100 }}>Supply Plans</Typography>
+            {/* <Button variant="contained" sx={{ backgroundColor: 'var(--coca-cola-red)', color: 'var(--coca-cola-white)', '&:hover': { backgroundColor: 'var(--coca-cola-red)' } }} component={Link} to="/create-scenario">
+              + Supply Plan
+            </Button> */}
           </Box>
           <Box sx={{ flexGrow: 1, height: '100%', overflow: 'auto', border: '1px solid #ddd', borderRadius: '10px', width: '100%' }}>
             <Table sx={{ width: '100%' }}>

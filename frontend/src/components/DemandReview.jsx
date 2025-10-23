@@ -53,10 +53,8 @@ function DemandReview() {
     startWeek: 45,
     endWeek: 52,
   });
-  const [editingCell, setEditingCell] = useState(null);
-  const [editedValue, setEditedValue] = useState('');
-  const [reasonCode, setReasonCode] = useState('');
-  const [editingReason, setEditingReason] = useState(null);
+  const [editingRowId, setEditingRowId] = useState(null);
+  const [editedForecast, setEditedForecast] = useState('');
   const [editedReason, setEditedReason] = useState('');
   const [reasonCodes, setReasonCodes] = useState([]);
 
@@ -184,60 +182,38 @@ function DemandReview() {
     setFilters(clearedFilters);
   };
 
-  const handleCellEdit = (rowId, columnId, value) => {
-    setEditingCell({ rowId, columnId });
-    setEditedValue(value);
+  const handleEditRow = (rowId) => {
+    setEditingRowId(rowId);
+    const row = forecastData.find(r => r.id === rowId);
+    setEditedForecast(row.forecast_volume.toString());
+    setEditedReason(row.adjustment_reason || '');
   };
 
-  const handleReasonEdit = (rowId, value) => {
-    setEditingReason(rowId);
-    setEditedReason(value);
-  };
-
-  const handleSaveReason = async (forecastId) => {
-    if (!editingReason) return;
-
-    try {
-      await axios.put(`${API_BASE_URL}/api/demand/forecast/${forecastId}`, {
-        adjustment_reason: editedReason,
-        userId: user.id,
-      });
-      setFilters({ ...filters });
-      setEditingReason(null);
-      setEditedReason('');
-    } catch (error) {
-      console.error('Error updating reason:', error);
-      alert('Failed to update reason.');
-    }
-  };
-
-  const handleSaveEdit = async (forecastId, originalValue) => {
-    if (!editingCell) return;
-
-    const newValue = parseFloat(editedValue);
-
-    if (isNaN(newValue)) {
-      alert('Please enter a valid number.');
+  const handleSaveRow = async (forecastId) => {
+    const newForecast = parseFloat(editedForecast);
+    if (isNaN(newForecast)) {
+      alert('Please enter a valid forecast volume.');
       return;
     }
 
-    const adjustment_volume = newValue - originalValue;
-
-    if (!reasonCode) {
-      alert('Reason code is required for adjustments.');
+    if (!editedReason.trim()) {
+      alert('Reason is required.');
       return;
     }
+
+    const originalRow = forecastData.find(r => r.id === forecastId);
+    const adjustment_volume = newForecast - originalRow.forecast_volume;
 
     try {
       await axios.put(`${API_BASE_URL}/api/demand/forecast/${forecastId}`, {
         adjustment_volume,
-        reason_code: reasonCode,
+        adjustment_reason: editedReason,
         userId: user.id,
       });
       setFilters({ ...filters });
-      setEditingCell(null);
-      setEditedValue('');
-      setReasonCode('');
+      setEditingRowId(null);
+      setEditedForecast('');
+      setEditedReason('');
     } catch (error) {
       console.error('Error updating forecast:', error);
       alert('Failed to update forecast.');
@@ -521,7 +497,7 @@ function DemandReview() {
         <TableContainer component={Paper}>
           <Table stickyHeader>
             <TableHead>
-              <TableRow sx={{ backgroundColor: 'black', color: 'white' }}>
+              <TableRow sx={{ color: 'black' }}>
                 <TableCell sx={{ color: 'white' }}>SKU</TableCell>
                 <TableCell sx={{ color: 'white' }}>DC</TableCell>
                 <TableCell sx={{ color: 'white' }}>Segment</TableCell>
@@ -550,16 +526,13 @@ function DemandReview() {
                   <TableCell>{row.pack_size}</TableCell>
                   <TableCell>{row.pack_type}</TableCell>
                   <TableCell>{row.week}</TableCell>
-                  <TableCell
-                    onDoubleClick={() => handleCellEdit(row.sku_id + '-' + row.dc_id + '-' + row.week, 'forecast_volume', row.forecast_volume)}
-                  >
-                    {editingCell?.rowId === (row.sku_id + '-' + row.dc_id + '-' + row.week) && editingCell?.columnId === 'forecast_volume' ? (
+                  <TableCell>
+                    {editingRowId === row.id ? (
                       <TextField
-                        value={editedValue}
-                        onChange={(e) => setEditedValue(e.target.value)}
-                        onBlur={() => handleSaveEdit(row.id, row.forecast_volume)}
-                        autoFocus
+                        value={editedForecast}
+                        onChange={(e) => setEditedForecast(e.target.value)}
                         size="small"
+                        autoFocus
                       />
                     ) : (
                       row.forecast_volume
@@ -569,17 +542,14 @@ function DemandReview() {
                   <TableCell>{row.bias}</TableCell>
                   <TableCell>{row.model_type}</TableCell>
                   <TableCell>{row.adjustment_volume}</TableCell>
-                  <TableCell
-                    onDoubleClick={() => handleReasonEdit(row.id, row.adjustment_reason)}
-                  >
-                    {editingReason === row.id ? (
+                  <TableCell>
+                    {editingRowId === row.id ? (
                       <Autocomplete
                         freeSolo
                         options={reasonCodes.map((code) => code.reason)}
                         value={editedReason}
                         onChange={(event, newValue) => setEditedReason(newValue || '')}
                         onInputChange={(event, newInputValue) => setEditedReason(newInputValue)}
-                        onBlur={() => handleSaveReason(row.id)}
                         renderInput={(params) => (
                           <TextField
                             {...params}
@@ -595,17 +565,25 @@ function DemandReview() {
                     )}
                   </TableCell>
                   <TableCell>
-                    <Button
-                      onClick={() => {
-                        handleCellEdit(row.sku_id + '-' + row.dc_id + '-' + row.week, 'forecast_volume', row.forecast_volume);
-                        handleReasonEdit(row.id, row.adjustment_reason);
-                      }}
-                      size="small"
-                      variant="outlined"
-                      sx={{ mr: 1, borderColor: '#C8102E', color: '#C8102E', '&:hover': { backgroundColor: '#C8102E', color: '#FFFFFF' } }}
-                    >
-                      Edit
-                    </Button>
+                    {editingRowId === row.id ? (
+                      <Button
+                        onClick={() => handleSaveRow(row.id)}
+                        size="small"
+                        variant="contained"
+                        sx={{ mr: 1, backgroundColor: '#C8102E', color: '#FFFFFF', '&:hover': { backgroundColor: '#A00' } }}
+                      >
+                        Save
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={() => handleEditRow(row.id)}
+                        size="small"
+                        variant="outlined"
+                        sx={{ mr: 1, borderColor: '#C8102E', color: '#C8102E', '&:hover': { backgroundColor: '#C8102E', color: '#FFFFFF' } }}
+                      >
+                        Edit
+                      </Button>
+                    )}
                   </TableCell>
                 </TableRow>
               ))}
