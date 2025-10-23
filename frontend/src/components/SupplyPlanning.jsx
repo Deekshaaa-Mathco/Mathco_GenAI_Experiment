@@ -117,7 +117,7 @@ function SupplyPlanning() {
       }
 
       try {
-        await axios.put(`${API_BASE_URL}/supply/utilization/${type}/${id}`, {
+        await axios.put(`${API_BASE_URL}/api/supply/utilization/${type}/${id}`, {
           value: newCapacity,
         });
         const res = await axios.get(`${API_BASE_URL}/api/supply/planning`);
