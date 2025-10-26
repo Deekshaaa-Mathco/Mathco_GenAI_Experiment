@@ -20,6 +20,7 @@ router.get('/review', async (req, res) => {
 
     let forecastQuery = `
       SELECT
+          f.id AS id,
           s.id AS sku_id,
           s.name AS sku_name,
           s.segment,
@@ -30,9 +31,10 @@ router.get('/review', async (req, res) => {
           d.id AS dc_id,
           d.name AS dc_name,
           f.week,
-          f.forecast_volume,
-          f.actual_volume,
-          f.bias,
+          COALESCE(f.forecast_volume, 0) + COALESCE(adj.adjustment_volume, 0) AS forecast_volume,
+          COALESCE(f.forecast_volume, 0) AS original_forecast_volume,
+          COALESCE(f.actual_volume, 0) AS actual_volume,
+          COALESCE(f.bias, 0) AS bias,
           f.model_type,
           COALESCE(adj.adjustment_volume, 0) AS adjustment_volume,
           COALESCE(adj.reason_code, '') AS adjustment_reason

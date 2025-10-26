@@ -7,7 +7,7 @@ function Sidebar() {
   const { logout } = useAuth();
 
   return (
-    <Drawer variant="permanent" sx={{ width: 240, flexShrink: 0, '& .MuiDrawer-paper': { width: 240, boxSizing: 'border-box', mt: '90px', backgroundColor: '#000000', color: '#FFFFFF', display: 'flex', flexDirection: 'column', height: 'calc(100vh - 90px)' } }}>
+    <Drawer variant="permanent" sx={{ width: 240, flexShrink: 0, '& .MuiDrawer-paper': { width: 240, boxSizing: 'border-box', mt: '68px', backgroundColor: '#000000', color: '#FFFFFF', display: 'flex', flexDirection: 'column', height: 'calc(100vh - 68px)' } }}>
       <List sx={{ flexGrow: 1 }}>
         <ListItem disablePadding>
           <ListItemButton component={Link} to="/" sx={{ backgroundColor: '#000000', '&:hover': { backgroundColor: '#333333' } }}>

@@ -7,30 +7,30 @@ function Header() {
   const { user, logout, isAuthenticated } = useAuth();
 
   return (
-    <AppBar 
-      position="fixed" 
-      sx={{ 
-        borderRadius: '0 0 10px 10px', 
-        zIndex: 1300, 
+    <AppBar
+      position="fixed"
+      sx={{
+        borderRadius: '0 0 10px 10px',
+        zIndex: 1300,
         backgroundColor: 'var(--coca-cola-black)',
         // ← FIX: REMOVE WHITE BORDER!
         boxShadow: 'none !important',           // NO SHADOW
         borderBottom: 'none !important'         // NO BORDER
       }}
     >
-      <Toolbar sx={{ 
+      <Toolbar sx={{
         // ← ALSO FIX TOOLBAR PADDING
-        px: 2, 
-        minHeight: '80px' 
+        px: 2,
+        minHeight: '85px'
       }}>
         <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
-          <img src="/logo.png" alt="Logo" style={{ height: '100px' }} />
+          <img src="/logo.png" alt="Logo" style={{ height: '75px' }} />
         </Box>
-        <Typography 
-          variant="h5" 
-          component="div" 
-          sx={{ 
-            flexGrow: 1, 
+        <Typography
+          variant="h5"
+          component="div"
+          sx={{
+            flexGrow: 1,
             color: 'var(--coca-cola-white)',
             fontWeight: 700
           }}
@@ -43,16 +43,6 @@ function Header() {
             <Typography variant="h6" sx={{ mr: 2, color: 'var(--coca-cola-white)' }}>
               Welcome, {user?.username}
             </Typography>
-            <Button 
-              color="inherit" 
-              onClick={logout}
-              sx={{ 
-                color: 'var(--coca-cola-white)',
-                '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' }
-              }}
-            >
-              Logout
-            </Button>
           </Box>
         )}
       </Toolbar>

@@ -99,7 +99,7 @@ function MasterConfigurator() {
         <Tabs value={tabValue} onChange={handleTabChange} aria-label="master configurator tabs">
           <Tab label="Commercial Inputs" sx={{ color: 'black' }} />
           <Tab label="Reason Codes" sx={{ color: 'black' }} />
-          <Tab label="Model Performance" sx={{ color: 'white' }} />
+          {/* <Tab label="Model Performance" sx={{ color: 'white' }} /> */}
         </Tabs>
       </Box>
       {tabValue === 0 && (
@@ -247,7 +247,7 @@ function MasterConfigurator() {
           </Dialog>
         </Box>
       )}
-      {tabValue === 2 && (
+      {/* {tabValue === 2 && (
         <Box sx={{ mt: 2 }}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6} md={6}>
@@ -305,7 +305,7 @@ function MasterConfigurator() {
           </Table>
           <Button variant="contained" sx={{ mt: 2 }}>Retrain</Button>
         </Box>
-      )}
+      )} */}
     </div>
   );
 }

@@ -50,9 +50,6 @@ function Register() {
       }}
     >
       <Paper elevation={3} sx={{ p: 4, width: '100%', maxWidth: 400 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
-          <img src="/logo.png" alt="Coca-Cola Logo" style={{ height: '60px' }} />
-        </Box>
         <Typography variant="h4" component="h1" gutterBottom align="center" sx={{ color: 'var(--coca-cola-black)' }}>
           Register
         </Typography>

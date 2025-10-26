@@ -278,14 +278,6 @@ function SupplyPlanning() {
                         )}
                       </TableCell>
                   <TableCell>
-                    <Button
-                      onClick={() => alert(`Viewing details for Line: ${row.line_name}\nPlant: ${row.plant_name}\nWeekly Capacity: ${row.weekly_capacity}\nChangeover Time: ${row.changeover_time}\nUtilization: ${row.utilization_percentage}%`)}
-                      size="small"
-                      variant="outlined"
-                      sx={{ mr: 1, borderColor: '#C8102E', color: '#C8102E', '&:hover': { backgroundColor: '#C8102E', color: '#FFFFFF' } }}
-                    >
-                      View
-                    </Button>
                     {editingCell?.type === 'line' &&
                       editingCell?.id === row.id &&
                       editingCell?.field === 'utilization_percentage' && (
@@ -415,7 +407,7 @@ function SupplyPlanning() {
   }
 
   return (
-    <Box sx={{ p: 3 }}>
+    <Box sx={{ p: 3, paddingTop: '0px' }}>
       <Breadcrumbs />
       <Typography variant="h4" gutterBottom sx={{ color: 'black' }}>
         Supply Planning

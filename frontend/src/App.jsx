@@ -92,7 +92,7 @@ function AppContent() {
       <Header />
       <Box sx={{ display: 'flex', flexGrow: 1, paddingTop: '80px' }}>
         <Sidebar />
-        <Box component="main" sx={{ flexGrow: 1, ml: 250, p: '8px 16px 16px 16px', m: 0, mr: 1, mt: 0 }}>
+        <Box component="main" sx={{ flexGrow: 1, ml: 250, p: '0px 16px 16px 16px', m: 0, mr: 1, mt: 0, marginTop: 0 }}>
           <Routes>
             <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
             <Route path="/demand-review" element={<PrivateRoute><DemandReview /></PrivateRoute>} />

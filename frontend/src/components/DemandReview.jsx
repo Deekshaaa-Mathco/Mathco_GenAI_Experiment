@@ -66,6 +66,7 @@ function DemandReview() {
           const forecastData = res.data.forecast.map(item => ({
             ...item,
             forecast_volume: parseFloat(item.forecast_volume),
+            original_forecast_volume: parseFloat(item.original_forecast_volume),
             actual_volume: parseFloat(item.actual_volume),
             bias: parseFloat(item.bias),
             adjustment_volume: parseFloat(item.adjustment_volume),
@@ -140,10 +141,11 @@ function DemandReview() {
         if (res.data && res.data.forecast && Array.isArray(res.data.forecast)) {
           const forecastData = res.data.forecast.map(item => ({
             ...item,
-            forecast_volume: parseFloat(item.forecast_volume),
-            actual_volume: parseFloat(item.actual_volume),
-            bias: parseFloat(item.bias),
-            adjustment_volume: parseFloat(item.adjustment_volume),
+            forecast_volume: parseFloat(item.forecast_volume) || 0,
+            original_forecast_volume: parseFloat(item.original_forecast_volume) || 0,
+            actual_volume: parseFloat(item.actual_volume) || 0,
+            bias: parseFloat(item.bias) || 0,
+            adjustment_volume: parseFloat(item.adjustment_volume) || 0,
           }));
           setForecastData(forecastData);
         } else {
@@ -182,9 +184,8 @@ function DemandReview() {
     setFilters(clearedFilters);
   };
 
-  const handleEditRow = (rowId) => {
-    setEditingRowId(rowId);
-    const row = forecastData.find(r => r.id === rowId);
+  const handleEditRow = (row) => {
+    setEditingRowId(row.id);
     setEditedForecast(row.forecast_volume.toString());
     setEditedReason(row.adjustment_reason || '');
   };
@@ -202,12 +203,12 @@ function DemandReview() {
     }
 
     const originalRow = forecastData.find(r => r.id === forecastId);
-    const adjustment_volume = newForecast - originalRow.forecast_volume;
+    const adjustment_volume = newForecast - originalRow.original_forecast_volume;
 
     try {
       await axios.put(`${API_BASE_URL}/api/demand/forecast/${forecastId}`, {
         adjustment_volume,
-        adjustment_reason: editedReason,
+        reason_code: editedReason,
         userId: user.id,
       });
       setFilters({ ...filters });
@@ -237,7 +238,7 @@ function DemandReview() {
   const uniqueCategories = [...new Set(allForecastData.map(item => item.category))];
 
   return (
-    <Box sx={{ p: 3 }}>
+    <Box sx={{ p: 3, paddingTop: '0px' }}>
       <Breadcrumbs />
       {/* Segmentation KPI Cards - COMMENTED OUT */}
       {/*
@@ -494,25 +495,25 @@ function DemandReview() {
 
       <Paper elevation={2} sx={{ p: 2, mt: 2 }}>
         <Typography variant="h6" gutterBottom>Detailed Forecast</Typography>
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} sx={{ maxHeight: 600 }}>
           <Table stickyHeader>
             <TableHead>
-              <TableRow sx={{ color: 'black' }}>
-                <TableCell sx={{ color: 'white' }}>SKU</TableCell>
-                <TableCell sx={{ color: 'white' }}>DC</TableCell>
-                <TableCell sx={{ color: 'white' }}>Segment</TableCell>
-                <TableCell sx={{ color: 'white' }}>Category</TableCell>
-                <TableCell sx={{ color: 'white' }}>Brand</TableCell>
-                <TableCell sx={{ color: 'white' }}>Pack Size</TableCell>
-                <TableCell sx={{ color: 'white' }}>Pack Type</TableCell>
-                <TableCell sx={{ color: 'white' }}>Week</TableCell>
-                <TableCell sx={{ color: 'white' }}>Forecast Volume</TableCell>
-                <TableCell sx={{ color: 'white' }}>Actual Volume</TableCell>
-                <TableCell sx={{ color: 'white' }}>Bias</TableCell>
-                <TableCell sx={{ color: 'white' }}>Model Type</TableCell>
-                <TableCell sx={{ color: 'white' }}>Adjustment</TableCell>
-                <TableCell sx={{ color: 'white' }}>Reason</TableCell>
-                <TableCell sx={{ color: 'white' }}>Actions</TableCell>
+              <TableRow sx={{ backgroundColor: 'white' }}>
+                <TableCell>SKU</TableCell>
+                <TableCell>DC</TableCell>
+                <TableCell>Segment</TableCell>
+                <TableCell>Category</TableCell>
+                <TableCell>Brand</TableCell>
+                <TableCell>Pack Size</TableCell>
+                <TableCell>Pack Type</TableCell>
+                <TableCell>Week</TableCell>
+                <TableCell>Forecast Volume</TableCell>
+                <TableCell>Actual Volume</TableCell>
+                <TableCell>Bias</TableCell>
+                <TableCell>Model Type</TableCell>
+                <TableCell>Adjustment</TableCell>
+                <TableCell>Reason</TableCell>
+                <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -546,7 +547,7 @@ function DemandReview() {
                     {editingRowId === row.id ? (
                       <Autocomplete
                         freeSolo
-                        options={reasonCodes.map((code) => code.reason)}
+                        options={reasonCodes.filter(code => code && code.reason).map((code) => code.reason)}
                         value={editedReason}
                         onChange={(event, newValue) => setEditedReason(newValue || '')}
                         onInputChange={(event, newInputValue) => setEditedReason(newInputValue)}
@@ -576,7 +577,7 @@ function DemandReview() {
                       </Button>
                     ) : (
                       <Button
-                        onClick={() => handleEditRow(row.id)}
+                        onClick={() => handleEditRow(row)}
                         size="small"
                         variant="outlined"
                         sx={{ mr: 1, borderColor: '#C8102E', color: '#C8102E', '&:hover': { backgroundColor: '#C8102E', color: '#FFFFFF' } }}
